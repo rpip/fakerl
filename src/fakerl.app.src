@@ -1,0 +1,12 @@
+{application, fakerl,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { fakerl_app, []}},
+  {env, []}
+ ]}.

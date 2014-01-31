@@ -1,0 +1,19 @@
+# In no particular order:
+
+* Write tests
+* Add documentation, including a comprehensive README
+* Add fake data providers:
+  1. Name
+  2. Address
+  3. Company
+  4. Credit Card
+  5. File
+  6. Datetime
+  7. Job
+  8. Lorem
+  9. Person
+  10. Phone number
+  11. User agent
+  12. Internet
+  13. Profile
+* Locale specific fake data: Ghana, English, Swahili, French

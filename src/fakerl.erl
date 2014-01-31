@@ -66,7 +66,7 @@ random(From, To, LowerBound, UpperBound) ->
     L = [crypto:rand_uniform(From, To) || _ <- lists:seq(LowerBound, UpperBound)],
     lists:nth(1, L).
 
-%% @doc Parse a format template into a string.
+%% @doc Compiles the format template into a string.
 -spec parse(Template, Module) -> string() when
       Template :: string(),
       Module :: atom().
@@ -79,13 +79,19 @@ parse(Template, Module) ->
         {match, Matches} ->
             render(Matches, Template, Module)
     end.
+
+%% @doc Replaces all regex matches with equivalent function calls
+%% in the given module
+-spec render(RegexMatches, Template, Module) -> RenderedTemplate when
+      RegexMatches :: regex_match_list(),
+      Template :: string(),
+      Module :: atom(),
+      RenderedTemplate :: list().
 render([], Template, _Module) ->
     Bin = iolist_to_binary(Template),
     binary_to_list(Bin);
 render([[Regex, Function]|Tail], Template, Module) ->
-    io:format("regex: ~p and function: ~p ~n", [Regex, Function]),
     Function1 = list_to_atom(Function),
     Value = Module:Function1(),
     Template1 = re:replace(Template, Regex, Value),
     render(Tail, Template1, Module).
-    

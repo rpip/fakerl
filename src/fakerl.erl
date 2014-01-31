@@ -11,14 +11,21 @@
 -include("fakerl.hrl").
 -compile([export_all]).
 
+%%%-------------------------------------------------------------------
+%%% Interface to commonly used fake data generators
+%%%-------------------------------------------------------------------
 name() ->
-    undefined.
+    fakerl_names:name().
 
 address() ->
     undefined.
 
 text() ->
     undefined.
+
+%%%-------------------------------------------------------------------
+%%% core/shared logic
+%%%-------------------------------------------------------------------
 
 %% @doc Returns a random number betweeen 0 and 10
 -spec random_number() -> integer().

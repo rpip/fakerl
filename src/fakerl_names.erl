@@ -13,15 +13,15 @@
 -compile([export_all]).
 
 formats() ->
-    ['{{first_name}} {{last_name}}'].
+    ["{{first_name}} {{last_name}}"].
 
-%% @doc Returns a randome name. 
+%% @doc Returns a random name. 
 %% This name is a combination of a first name and a last name.
 -spec name() -> Name when 
       Name :: list().
 name() ->
-    pattern = fakerl:random_element(?MODULE:formats()),
-    fakerl:parse(pattern, ?MODULE).
+    Pattern = fakerl:random_element(?MODULE:formats()),
+    fakerl:parse(Pattern, ?MODULE).
 
 %% @doc Returns a random 'first name'
 -spec first_name() -> Name when 

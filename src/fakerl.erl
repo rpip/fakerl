@@ -66,3 +66,26 @@ random(From, To, LowerBound, UpperBound) ->
     L = [crypto:rand_uniform(From, To) || _ <- lists:seq(LowerBound, UpperBound)],
     lists:nth(1, L).
 
+%% @doc Parse a format template into a string.
+-spec parse(Template, Module) -> string() when
+      Template :: string(),
+      Module :: atom().
+parse([], _Template) ->
+    {error, empty_string};
+parse(Template, Module) ->
+    case re:run(Template, ?VAR_REGEX, [global, {capture, all, list}]) of 
+        nomatch ->
+            {error, nomatch};
+        {match, Matches} ->
+            render(Matches, Template, Module)
+    end.
+render([], Template, _Module) ->
+    Bin = iolist_to_binary(Template),
+    binary_to_list(Bin);
+render([[Regex, Function]|Tail], Template, Module) ->
+    io:format("regex: ~p and function: ~p ~n", [Regex, Function]),
+    Function1 = list_to_atom(Function),
+    Value = Module:Function1(),
+    Template1 = re:replace(Template, Regex, Value),
+    render(Tail, Template1, Module).
+    

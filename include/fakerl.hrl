@@ -18,8 +18,11 @@
 %%%-------------------------------------------------------------------
 %%% miscellaneous
 %%%-------------------------------------------------------------------
+-define(VAR_REGEX, "{{([A-Za-z0-9_]+)}}").
+
 -define(LOWER_BOUND, 0).
 -define(UPPER_BOUND, 10).
+
 
 %% Turns a record into a proplist
 -define(R2P(Record,RecordType), lists:zip(record_info(fields, RecordType), tl(tuple_to_list(Record)))).

@@ -28,3 +28,5 @@
 
 %% Turns a record into a proplist
 -define(R2P(Record,RecordType), lists:zip(record_info(fields, RecordType), tl(tuple_to_list(Record)))).
+
+-define(COUNTRIES_JSON_FILE, code:priv_dir(fakerl) ++ "/countries.json"). 

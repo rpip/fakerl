@@ -17,3 +17,4 @@
   12. Internet
   13. Profile
 * Locale specific fake data: Ghana, English, Swahili, French
+* Add streams module for dealing with huge list values

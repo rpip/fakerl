@@ -11,12 +11,12 @@
 -include("fakerl.hrl").
 -compile([export_all]).
 
--spec countries() -> 
+-spec countries() -> binary() | {error, Reason :: string()}.
 countries() ->
     case file:read_file(?COUNTRIES_JSON_FILE) of
         {ok, Bin} ->
           jsx:decode(Bin);
         {error, enoent} ->
-            error(io:format("Missing countries json file: ~p", [?COUNTRIES_JSON_FILE]))
+            error("Missing countries json file: " ++ ?COUNTRIES_JSON_FILE)
     end.
                          

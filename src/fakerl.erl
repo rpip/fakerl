@@ -14,6 +14,15 @@
 %%%-------------------------------------------------------------------
 %%% Interface to commonly used fake data generators
 %%%-------------------------------------------------------------------
+first_name() ->
+    fakerl_names:first_name().
+
+last_name() ->
+    fakerl_names:last_name().
+
+user_name() ->
+    fakerl_internet:user_name().
+
 name() ->
     fakerl_names:name().
 
@@ -22,6 +31,9 @@ address() ->
 
 text() ->
     undefined.
+
+company() ->
+    fakerl_company:company_name().
 
 %%%-------------------------------------------------------------------
 %%% core/shared logic
@@ -62,6 +74,9 @@ random_element(Xs) ->
 random(From, To) ->
    crypto:rand_uniform(From, To).
 
+%% @doc Compiles the template within the main fakerl module context
+parse(Template) ->
+    parse(Template, ?MODULE).
 %% @doc Compiles the format template into a string.
 -spec parse(Template, Module) -> {Status, string()} when
       Template :: string(),
@@ -77,7 +92,7 @@ parse(Template, Module) ->
             render(Matches, Template, Module)
     end.
 
-%% @doc Replaces all regex matches with equivalent function calls
+%% @doc Replaces tokens ('{{ tokenName }}') with the result from the token method call
 %% in the given module
 -spec render(RegexMatches, Template, Module) -> RenderedTemplate when
       RegexMatches :: regex_match_list(),
@@ -89,7 +104,12 @@ render([], Template, _Module) ->
     binary_to_list(Bin);
 render([[Regex, Function]|Tail], Template, Module) ->
     Function1 = list_to_atom(Function),
-    Value = Module:Function1(),
+    Value = try Module:Function1() of 
+               Result -> Result
+            catch
+                error:undef -> 
+                    ?MODULE:Function1()
+            end,
     Template1 = re:replace(Template, Regex, Value),
     render(Tail, Template1, Module).
 
@@ -109,3 +129,8 @@ list_to_str(L) when is_list(L) ->
     L2 = [integer_to_list(X) || X <- L],
     L3 = iolist_to_binary(L2),
     binary_to_list(L3).
+
+%% @doc Return new list by shuffling the members of list
+-spec shuffle(list()) -> list().
+shuffle(L) when is_list(L) ->
+    [X||{_,X} <- lists:sort([ {random:uniform(), N} || N <- L])].

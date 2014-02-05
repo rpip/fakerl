@@ -1,13 +1,9 @@
-Fakerl
-=======
-
-  ______    _             _
- |  ____|  | |           | |
- | |__ __ _| | _____ _ __| |
- |  __/ _` | |/ / _ \ '__| |
- | | | (_| |   <  __/ |  | |
- |_|  \__,_|_|\_\___|_|  |_|
-
+     _______    ___       __  ___  _______ .______       __
+    |   ____|  /   \     |  |/  / |   ____||   _  \     |  |
+    |  |__    /  ^  \    |  '  /  |  |__   |  |_)  |    |  |
+    |   __|  /  /_\  \   |    <   |   __|  |      /     |  |
+    |  |    /  _____  \  |  .  \  |  |____ |  |\  \----.|  `----.
+    |__|   /__/     \__\ |__|\__\ |_______|| _| `._____||_______|
 
 
 *Fakerl* is an Erlang application that generates fake data for you.
@@ -16,6 +12,10 @@ fill-in your persistence to stress test it, or anonymize data taken from a produ
 
 Fakerl is a port of Python's [Faker][python-faker], and was motivated
 by a need for a bunch of fake data for writing test suites.
+
+
+*work in progress*
+
 
 ## How it works
 
@@ -47,4 +47,5 @@ Credits
 - [joke2k][joke2k] / [Faker][python-faker]
 
 
-[python-faker]:  "Python faker"
+[python-faker]: https://github.com/joke2k/Faker "Python faker"
+[joke2k]: https://github.com/joke2k "joke2k"

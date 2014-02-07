@@ -4,7 +4,7 @@ REBAR = $(shell which rebar)
 ERL = $(shell which erl)
 ERLFLAGS= -pa $(CURDIR)/.eunit -pa $(CURDIR)/ebin -pa $(CURDIR)/deps/*/ebin
 
-.PHONY: all compile doc clean tests build-plt dialyze shell distclean pdf \
+.PHONY: all compile docs clean tests build-plt dialyze shell distclean pdf \
 update-deps rebuild
 
 # ================================================================

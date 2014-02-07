@@ -8,12 +8,13 @@
 %%%-------------------------------------------------------------------
 -module(fakerl_names).
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
--define(FIRST_NAMES, ["John", "Jane" , "Bill", "Douglas", "Yaw", "Nancy"]).
--define(LAST_NAMES, ["Doe", "Cosby", "Rain", "Drew", "Asare"]).
--compile([export_all]).
+-include("fakerl.hrl").
+-export([name/0, first_name/0, last_name/0]).
 
-formats() ->
-    ["{{first_name}} {{last_name}}"].
+
+%%%-------------------------------------------------------------------
+%%% API
+%%%-------------------------------------------------------------------
 
 %% @doc Returns a random name. 
 %% This name is a combination of a first name and a last name.
@@ -34,3 +35,10 @@ first_name() ->
       Name :: list().
 last_name() ->
     fakerl:random_element(?LAST_NAMES).
+
+
+%%%-------------------------------------------------------------------
+%%% formats and helpers
+%%%-------------------------------------------------------------------
+formats() ->
+    ["{{first_name}} {{last_name}}"].

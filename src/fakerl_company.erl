@@ -7,15 +7,30 @@
 %%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mhp>
 %%%-------------------------------------------------------------------
 -module(fakerl_company).
--define(LAST_NAMES, ["Mobile", "Oil", "Farms", "Friends"]).
--define(FIRST_NAMES, ["Merrill", "Goldman", "First", "Virgin"]).
--compile([export_all]).
+-export([first_name/0, last_name/0, company_name/0]).
 
-firt_name() ->
-    fakerl:random_element(?FIRST_NAMES).
+
+%%%-------------------------------------------------------------------
+%%% API
+%%%-------------------------------------------------------------------
+first_name() ->
+    fakerl:random_element(first_names()).
 
 last_name() ->
-    fakerl:random_element(?LAST_NAMES).
+    fakerl:random_element(last_names()).
+
+company_name() ->
+    fakerl:random_element(company_name_formats()).
+
+
+%%%-------------------------------------------------------------------
+%%% formats and helpers
+%%%-------------------------------------------------------------------
+last_names() ->
+    ["Mobile", "Oil", "Farms", "Friends"].
+
+first_names() ->
+    ["Merrill", "Goldman", "First", "Virgin"].
 
 company_name_formats() ->
     ["{{first_name}} and {{last_name}}", 
@@ -23,8 +38,8 @@ company_name_formats() ->
     "{{first_name}} {{last_name}} {{company_suffix}}", 
      "{{last_name}} and Associates"].
 
+company_suffix() ->
+    fakerl:random_element(company_suffixes()).
+
 company_suffixes() ->
     ["Ltd", "Group", "LLC", "Holdings", "Partners", "Services"].
-
-company_name() ->
-    fakerl:random_element(company_name_formats()).

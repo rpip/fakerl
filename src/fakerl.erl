@@ -9,7 +9,16 @@
 -module(fakerl).
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
 -include("fakerl.hrl").
--compile([export_all]).
+
+%% Interface to common functions
+-export([first_name/0, last_name/0, user_name/0,
+        name/0, address/0, text/0, company/0]).
+
+%% API
+-export([random_number/0, random_letter/1, random_letter/0,
+        random_element/1, random/2]).
+-export([parse/1, parse/2, numerify/1, shuffle/1]).
+
 
 %%%-------------------------------------------------------------------
 %%% Interface to commonly used fake data generators
@@ -27,10 +36,10 @@ name() ->
     fakerl_names:name().
 
 address() ->
-    undefined.
+    fakerl_address:address().
 
 text() ->
-    undefined.
+    fakerl_lorem:text().
 
 company() ->
     fakerl_company:company_name().

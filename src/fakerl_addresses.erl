@@ -8,30 +8,17 @@
 %%%-------------------------------------------------------------------
 -module(fakerl_addresses).
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
--define(FIRST_NAMES, ["New", "Nairobi" , "Melbourne", "Instanbul", "Karachi", "Santiago"]).
--define(LAST_NAMES, ["Berlin", "Lagos", "Shangai", "York", "Riyadh"]).
--define(CITY_SUFFIXES, ["Ville", "Township", "Metropolis"]).
--define(STREET_SUFFIXES, ["Street", "Avenue", "Boulevard", "Central", "Road", "Lane"]).
--compile([export_all]).
+-export([country/0, countries/0, cities/0, 
+         city/0, city_suffix/0, street_suffix/0, 
+         street_name/0, street_address/0, postcode/0, 
+         first_name/0, last_name/0, building_number/0, address/0,
+         geo_coordinate/0, longitude/0, latitude/0]).
 
 
-building_number_formats() ->
-    ["##"].
 
-postcode_formats() ->
-    ["#####"].
-
-city_formats() ->
-    ["{{city}} {{city_suffix}}", "{{city}}", "{{first_name}}", "{{last_name}}"].
-
-street_name_formats() ->
-    ["{{last_name}} {{street_suffix}}"].
-
-street_address_formats() ->
-    ["{{building_number}} {{street_name}}"].
-
-address_formats() ->
-    ["{{street_address}} {{postcode}} {{city}}"].
+%%%-------------------------------------------------------------------
+%%%  API
+%%%-------------------------------------------------------------------
 
 countries() ->
     [binary_to_list(Name) ||
@@ -54,16 +41,16 @@ cities() ->
     ].
 
 city_suffix() ->
-    fakerl:random_element(?CITY_SUFFIXES).
+    fakerl:random_element(city_suffixes()).
 
 street_suffix() ->
-    fakerl:random_element(?STREET_SUFFIXES).
+    fakerl:random_element(street_suffixes()).
 
 first_name() ->
-    fakerl:random_element(?FIRST_NAMES).
+    fakerl:random_element(first_names()).
 
 last_name() ->
-    fakerl:random_element(?LAST_NAMES).
+    fakerl:random_element(last_names()).
 
 building_number() ->
     Format = fakerl:random_element(building_number_formats()),
@@ -85,8 +72,8 @@ postcode() ->
     Format = fakerl:random_element(postcode_formats()),
     fakerl:numerify(Format).
 
-%% @doc
-%% @example: '791 Crist Parks, Sashabury, IL 86039-9874'
+%% @doc Generate an address
+%% Example: '791 Crist Parks, Sashabury, IL 86039-9874'
 address() ->
     Format = fakerl:random_element(address_formats()),
     fakerl:parse(Format, ?MODULE).
@@ -110,3 +97,36 @@ latitude() ->
 %% @doc Returns a longitude co-ordinate
 longitude() ->
     geo_coordinate().
+
+%%%-------------------------------------------------------------------
+%%%  formats and helpers
+%%%-------------------------------------------------------------------
+first_names() -> 
+    ["New", "Nairobi" , "Melbourne", "Instanbul", "Karachi", "Santiago"].
+
+last_names() -> 
+    ["Berlin", "Lagos", "Shangai", "York", "Riyadh"].
+
+city_suffixes() ->
+    ["Ville", "Township", "Metropolis"].
+
+street_suffixes() ->
+    ["Street", "Avenue", "Boulevard", "Central", "Road", "Lane"].
+
+building_number_formats() ->
+    ["##"].
+
+postcode_formats() ->
+    ["#####"].
+
+city_formats() ->
+    ["{{city}} {{city_suffix}}", "{{city}}", "{{first_name}}", "{{last_name}}"].
+
+street_name_formats() ->
+    ["{{last_name}} {{street_suffix}}"].
+
+street_address_formats() ->
+    ["{{building_number}} {{street_name}}"].
+
+address_formats() ->
+    ["{{street_address}} {{postcode}} {{city}}"].

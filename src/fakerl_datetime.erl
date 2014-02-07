@@ -10,31 +10,16 @@
 -module(fakerl_datetime).
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
 -include("fakerl.hrl").
--compile([export_all]).
+-export([unixtime/0, date_time/0, date_time/1,
+         date/0, date/1, time/0, time/1, am_pm/0,
+         timezones/0, timezone/0, year/0, month_name/0, month/0,
+         day_of_month/0, day_of_week/0, century/0,
+        iso8601/0, country/0, countries/0]).
 
 
--spec countries() -> binary() | {error, Reason :: string()}.
-countries() ->
-    case file:read_file(?COUNTRIES_JSON_FILE) of
-        {ok, Bin} ->
-            jsx:decode(Bin);
-        {error, enoent} ->
-            error("Missing countries json file: " ++ ?COUNTRIES_JSON_FILE)
-    end.
-
-centuries() ->
-    ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 
-     'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 
-     'XV', 'XVI','XVII', 'XVIII', 'XIX', 'XX', 'XXI'].
-
-date_formats() ->
-    ["Y-m-d"].
-
-time_formats() ->
-    ["h:m:s", "g:ia"].
-
-datetime_formats() ->
-    ["Y-m-d H:i:s T", "Y-m-d g:ia", "n/j/Y g:ia", "D, d M Y H:i:s O"].
+%%%-------------------------------------------------------------------
+%%% API
+%%%-------------------------------------------------------------------
 
 %% @doc Get a timestamp between January 1, 1970 and now
 %% :example 1061306726
@@ -42,7 +27,8 @@ unixtime() ->
     qdate:to_unixtime(now()).
 
 date_time() ->
-    unixtime().
+    Pattern = fakerl:random_element(datetime_formats()),
+    date_time(Pattern).
 
 date_time(Pattern) ->
     qdate:to_string(Pattern, now()).
@@ -103,7 +89,32 @@ timezone() ->
     Timezones = fakerl:random_element(timezones),
     fakerl:random_element(Timezones).
 
+-spec countries() -> binary() | {error, Reason :: string()}.
+countries() ->
+    case file:read_file(?COUNTRIES_JSON_FILE) of
+        {ok, Bin} ->
+            jsx:decode(Bin);
+        {error, enoent} ->
+            error("Missing countries json file: " ++ ?COUNTRIES_JSON_FILE)
+    end.
 
 
+country() ->
+    fakerl:random_element(countries()).
 
+%%%-------------------------------------------------------------------
+%%% formats and helpers
+%%%-------------------------------------------------------------------
+centuries() ->
+    ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 
+     'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 
+     'XV', 'XVI','XVII', 'XVIII', 'XIX', 'XX', 'XXI'].
 
+date_formats() ->
+    ["Y-m-d"].
+
+time_formats() ->
+    ["h:m:s", "g:ia"].
+
+datetime_formats() ->
+    ["Y-m-d H:i:s T", "Y-m-d g:ia", "n/j/Y g:ia", "D, d M Y H:i:s O"].

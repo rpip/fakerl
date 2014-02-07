@@ -9,50 +9,19 @@
 %%%-------------------------------------------------------------------
 -module(fakerl_internet).
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
--compile([export_all]).
+-include("fakerl.hrl").
+-export([email/0, safe_email/0, free_email/0,
+         company_email/0, free_email_domain/0, 
+         uri/0, tld/0, uri_page/0, 
+         slug/0, domain_name/0, user_name/0, 
+         url/0, uri_path/0, uri_extension/0,
+         uri_path/1
+        ]).
 
-safe_email_tlds() -> 
-    ["org", "com", "net"].
 
-free_email_domains() -> 
-    ["gmail.com", "yahoo.com", "hotmail.com"].
-
-tlds() -> 
-    ["com", "com", "com", "com", "com", "com", "biz", "info", "net", "org"].
-
-uri_pages() ->
-  ["index", "home", "search", "main", "post", 
-   "homepage", "category", "register", "login", 
-   "faq", "about", "terms","privacy", "author"].
-
-uri_paths() ->
-  ["app", "main", "wp-content", "search", 
-   "category", "tag", "categories", "tags", 
-   "blog", "posts", "list", "explore"].
-
-uri_extensions() ->
-    [".html", ".html", ".html", ".htm", ".htm", ".php", ".php", ".jsp", ".asp"].
-
-user_name_formats() -> 
-  ["{{last_name}}.{{first_name}}",
-  "{{first_name}}.{{last_name}}",
-  "{{first_name}}##",
-  "?{{last_name}}"].
-
-email_formats() ->
-  ["{{user_name}}@{{domain_name}}",
-  "{{user_name}}@{{free_email_domain}}"].
-
-url_formats() ->
-  ["http://www.{{domain_name}}/", "http://{{domain_name}}/"].
-
-uri_formats() ->
- ["{{url}}",
-  "{{url}}{{uri_page}}/",
-  "{{url}}{{uri_page}}{{uri_extension}}",
-  "{{url}}{{uri_path}}/{{uri_page}}/",
-  "{{url}}{{uri_path}}/{{uri_page}}{{uri_extension}}"].
-
+%%%-------------------------------------------------------------------
+%%% API
+%%%-------------------------------------------------------------------
 email() ->
     Pattern = fakerl:random_element(email_formats()),
     fakerl:parse(Pattern).
@@ -109,3 +78,49 @@ uri() ->
 slug() ->
     undefined.
 
+
+%%%-------------------------------------------------------------------
+%%% formats and helpers
+%%%-------------------------------------------------------------------
+
+safe_email_tlds() -> 
+    ["org", "com", "net"].
+
+free_email_domains() -> 
+    ["gmail.com", "yahoo.com", "hotmail.com"].
+
+tlds() -> 
+    ["com", "com", "com", "com", "com", "com", "biz", "info", "net", "org"].
+
+uri_pages() ->
+  ["index", "home", "search", "main", "post", 
+   "homepage", "category", "register", "login", 
+   "faq", "about", "terms","privacy", "author"].
+
+uri_paths() ->
+  ["app", "main", "wp-content", "search", 
+   "category", "tag", "categories", "tags", 
+   "blog", "posts", "list", "explore"].
+
+uri_extensions() ->
+    [".html", ".html", ".html", ".htm", ".htm", ".php", ".php", ".jsp", ".asp"].
+
+user_name_formats() -> 
+  ["{{last_name}}.{{first_name}}",
+  "{{first_name}}.{{last_name}}",
+  "{{first_name}}##",
+  "?{{last_name}}"].
+
+email_formats() ->
+  ["{{user_name}}@{{domain_name}}",
+  "{{user_name}}@{{free_email_domain}}"].
+
+url_formats() ->
+  ["http://www.{{domain_name}}/", "http://{{domain_name}}/"].
+
+uri_formats() ->
+ ["{{url}}",
+  "{{url}}{{uri_page}}/",
+  "{{url}}{{uri_page}}{{uri_extension}}",
+  "{{url}}{{uri_path}}/{{uri_page}}/",
+  "{{url}}{{uri_path}}/{{uri_page}}{{uri_extension}}"].

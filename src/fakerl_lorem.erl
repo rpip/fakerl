@@ -7,54 +7,17 @@
 %%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mhp>
 %%%-------------------------------------------------------------------
 -module(fakerl_lorem).
--define(DEFAULT_MAX_TEXT_CHARS, 200).
--define(DEFAULT_NWORDS, 3).
--define(DEFAULT_SENTENCES_BLOCK_LENGTH, 3).
--define(DEFAULT_SENTENCE_NWORDS, 6).
--define(DEFAULT_SENTENCE_MAX_NWORDS, 20).
--define(DEFAULT_PARAGRAPH_LENGTH, 3).
--define(DEFAULT_PARAGRAPH_SENTENCE_LENGTH, 3).
--compile([export_all]).
+-include("fakerl.hrl").
+-export([word_list/0, word/0, words/1,
+         sentence/0, sentence/1, sentences/0, 
+         sentences/1, paragraph/0, paragraph/1,
+         paragraphs/0, paragraphs/1, text/0,
+         text/1]).
 
-word_list() ->
-    ["alias", "consequatur", "aut", "perferendis", "sit", "voluptatem",
-    "accusantium", "doloremque", "aperiam", "eaque", "ipsa", "quae", "ab",
-    "illo", "inventore", "veritatis", "et", "quasi", "architecto",
-    "beatae", "vitae", "dicta", "sunt", "explicabo", "aspernatur", "aut",
-    "odit", "aut", "fugit", "sed", "quia", "consequuntur", "magni",
-    "dolores", "eos", "qui", "ratione", "voluptatem", "sequi", "nesciunt",
-    "neque", "dolorem", "ipsum", "quia", "dolor", "sit", "amet",
-    "consectetur", "adipisci", "velit", "sed", "quia", "non", "numquam",
-    "eius", "modi", "tempora", "incidunt", "ut", "labore", "et", "dolore",
-    "magnam", "aliquam", "quaerat", "voluptatem", "ut", "enim", "ad",
-    "minima", "veniam", "quis", "nostrum", "exercitationem", "ullam",
-    "corporis", "nemo", "enim", "ipsam", "voluptatem", "quia", "voluptas",
-    "sit", "suscipit", "laboriosam", "nisi", "ut", "aliquid", "ex", "ea",
-    "commodi", "consequatur", "quis", "autem", "vel", "eum", "iure",
-    "reprehenderit", "qui", "in", "ea", "voluptate", "velit", "esse",
-    "quam", "nihil", "molestiae", "et", "iusto", "odio", "dignissimos",
-    "ducimus", "qui", "blanditiis", "praesentium", "laudantium", "totam",
-    "rem", "voluptatum", "deleniti", "atque", "corrupti", "quos",
-    "dolores", "et", "quas", "molestias", "excepturi", "sint",
-    "occaecati", "cupiditate", "non", "provident", "sed", "ut",
-    "perspiciatis", "unde", "omnis", "iste", "natus", "error",
-    "similique", "sunt", "in", "culpa", "qui", "officia", "deserunt",
-    "mollitia", "animi", "id", "est", "laborum", "et", "dolorum", "fuga",
-    "et", "harum", "quidem", "rerum", "facilis", "est", "et", "expedita",
-    "distinctio", "nam", "libero", "tempore", "cum", "soluta", "nobis",
-    "est", "eligendi", "optio", "cumque", "nihil", "impedit", "quo",
-    "porro", "quisquam", "est", "qui", "minus", "id", "quod", "maxime",
-    "placeat", "facere", "possimus", "omnis", "voluptas", "assumenda",
-    "est", "omnis", "dolor", "repellendus", "temporibus", "autem",
-    "quibusdam", "et", "aut", "consequatur", "vel", "illum", "qui",
-    "dolorem", "eum", "fugiat", "quo", "voluptas", "nulla", "pariatur",
-    "at", "vero", "eos", "et", "accusamus", "officiis", "debitis", "aut",
-    "rerum", "necessitatibus", "saepe", "eveniet", "ut", "et",
-    "voluptates", "repudiandae", "sint", "et", "molestiae", "non",
-    "recusandae", "itaque", "earum", "rerum", "hic", "tenetur", "a",
-    "sapiente", "delectus", "ut", "aut", "reiciendis", "voluptatibus",
-    "maiores", "doloribus", "asperiores", "repellat"].
 
+%%%-------------------------------------------------------------------
+%%% API
+%%%-------------------------------------------------------------------
 %% @doc Generate random word
 %% :example "Lorem"
 word() ->
@@ -120,6 +83,46 @@ text(MaxTextChars) when is_integer(MaxTextChars) ->
         true ->
             Str
     end.
-               
 
+%%%-------------------------------------------------------------------
+%%% formats and helpers
+%%%-------------------------------------------------------------------
+word_list() ->
+    ["alias", "consequatur", "aut", "perferendis", "sit", "voluptatem",
+    "accusantium", "doloremque", "aperiam", "eaque", "ipsa", "quae", "ab",
+    "illo", "inventore", "veritatis", "et", "quasi", "architecto",
+    "beatae", "vitae", "dicta", "sunt", "explicabo", "aspernatur", "aut",
+    "odit", "aut", "fugit", "sed", "quia", "consequuntur", "magni",
+    "dolores", "eos", "qui", "ratione", "voluptatem", "sequi", "nesciunt",
+    "neque", "dolorem", "ipsum", "quia", "dolor", "sit", "amet",
+    "consectetur", "adipisci", "velit", "sed", "quia", "non", "numquam",
+    "eius", "modi", "tempora", "incidunt", "ut", "labore", "et", "dolore",
+    "magnam", "aliquam", "quaerat", "voluptatem", "ut", "enim", "ad",
+    "minima", "veniam", "quis", "nostrum", "exercitationem", "ullam",
+    "corporis", "nemo", "enim", "ipsam", "voluptatem", "quia", "voluptas",
+    "sit", "suscipit", "laboriosam", "nisi", "ut", "aliquid", "ex", "ea",
+    "commodi", "consequatur", "quis", "autem", "vel", "eum", "iure",
+    "reprehenderit", "qui", "in", "ea", "voluptate", "velit", "esse",
+    "quam", "nihil", "molestiae", "et", "iusto", "odio", "dignissimos",
+    "ducimus", "qui", "blanditiis", "praesentium", "laudantium", "totam",
+    "rem", "voluptatum", "deleniti", "atque", "corrupti", "quos",
+    "dolores", "et", "quas", "molestias", "excepturi", "sint",
+    "occaecati", "cupiditate", "non", "provident", "sed", "ut",
+    "perspiciatis", "unde", "omnis", "iste", "natus", "error",
+    "similique", "sunt", "in", "culpa", "qui", "officia", "deserunt",
+    "mollitia", "animi", "id", "est", "laborum", "et", "dolorum", "fuga",
+    "et", "harum", "quidem", "rerum", "facilis", "est", "et", "expedita",
+    "distinctio", "nam", "libero", "tempore", "cum", "soluta", "nobis",
+    "est", "eligendi", "optio", "cumque", "nihil", "impedit", "quo",
+    "porro", "quisquam", "est", "qui", "minus", "id", "quod", "maxime",
+    "placeat", "facere", "possimus", "omnis", "voluptas", "assumenda",
+    "est", "omnis", "dolor", "repellendus", "temporibus", "autem",
+    "quibusdam", "et", "aut", "consequatur", "vel", "illum", "qui",
+    "dolorem", "eum", "fugiat", "quo", "voluptas", "nulla", "pariatur",
+    "at", "vero", "eos", "et", "accusamus", "officiis", "debitis", "aut",
+    "rerum", "necessitatibus", "saepe", "eveniet", "ut", "et",
+    "voluptates", "repudiandae", "sint", "et", "molestiae", "non",
+    "recusandae", "itaque", "earum", "rerum", "hic", "tenetur", "a",
+    "sapiente", "delectus", "ut", "aut", "reiciendis", "voluptatibus",
+    "maiores", "doloribus", "asperiores", "repellat"].
 

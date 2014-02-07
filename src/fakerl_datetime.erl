@@ -4,7 +4,7 @@
 %%% @doc
 %%% Date and time fake data generator
 %%% @end
-%%% @todo date/time arithmetic
+%%% todo: date/time arithmetic
 %%% Created :  3 Feb 2014 by Mawuli Adzaku <mawuli@mawuli.me>
 %%%-------------------------------------------------------------------
 -module(fakerl_datetime).

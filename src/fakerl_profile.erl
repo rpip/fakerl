@@ -1,10 +1,10 @@
 %%%-------------------------------------------------------------------
-%%% @author Mawuli Adzaku <mawuli@mhp>
+%%% @author Mawuli Adzaku <mawuli@mawuli.me>
 %%% @copyright (C) 2014, Mawuli Adzaku
 %%% @doc
 %%% User profile data generator
 %%% @end
-%%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mhp>
+%%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mawuli.me>
 %%%-------------------------------------------------------------------
 -module(fakerl_profile).
 -export([simple_profile/0, profile/0]).

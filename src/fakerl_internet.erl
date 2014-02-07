@@ -1,10 +1,10 @@
 %%%-------------------------------------------------------------------
-%%% @author Mawuli Adzaku <mawuli@mhp>
+%%% @author Mawuli Adzaku <mawuli@mawuli.me>
 %%% @copyright (C) 2014, Mawuli Adzaku
 %%% @doc
 %%% Internet related data generator: usernames, email addresses etc
 %%% @end
-%%% @todo: ipv4, ipv6, slugs
+%%% todo: ipv4, ipv6, slugs
 %%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mhp>
 %%%-------------------------------------------------------------------
 -module(fakerl_internet).

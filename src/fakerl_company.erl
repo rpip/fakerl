@@ -1,10 +1,10 @@
 %%%-------------------------------------------------------------------
-%%% @author Mawuli Adzaku <mawuli@mhp>
+%%% @author Mawuli Adzaku <mawuli@mawuli.me>
 %%% @copyright (C) 2014, Mawuli Adzaku
 %%% @doc
 %%% Company data generator 
 %%% @end
-%%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mhp>
+%%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mawuli.me>
 %%%-------------------------------------------------------------------
 -module(fakerl_company).
 -export([first_name/0, last_name/0, company_name/0]).

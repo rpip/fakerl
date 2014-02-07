@@ -19,3 +19,4 @@
 * Locale specific fake data: Ghana, English, Swahili, French
 * Add streams module for dealing with huge list values
 * Improve the parser to support "{{var_name}}##"
+* Extensible generator system, so new generators can be added

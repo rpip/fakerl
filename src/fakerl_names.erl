@@ -21,7 +21,7 @@
 -spec name() -> Name when 
       Name :: list().
 name() ->
-    Pattern = fakerl:random_element(?MODULE:formats()),
+    Pattern = fakerl:random_element(name_formats()),
     fakerl:parse(Pattern, ?MODULE).
 
 %% @doc Returns a random 'first name'
@@ -40,5 +40,5 @@ last_name() ->
 %%%-------------------------------------------------------------------
 %%% formats and helpers
 %%%-------------------------------------------------------------------
-formats() ->
+name_formats() ->
     ["{{first_name}} {{last_name}}"].

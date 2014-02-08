@@ -12,7 +12,8 @@
 
 %% Interface to common functions
 -export([first_name/0, last_name/0, user_name/0,
-        name/0, address/0, text/0, company/0]).
+        name/0, address/0, text/0, company/0,
+        country/0]).
 
 %% API
 -export([random_number/0, random_letter/1, random_letter/0,
@@ -43,6 +44,9 @@ text() ->
 
 company() ->
     fakerl_company:company_name().
+
+country() ->
+    fakerl_datetime:country().
 
 %%%-------------------------------------------------------------------
 %%% core/shared logic
@@ -98,7 +102,8 @@ parse(Template, Module) ->
         nomatch ->
             {error, nomatch};
         {match, Matches} ->
-            render(Matches, Template, Module)
+            RenderedTemplate = render(Matches, Template, Module),
+            numerify(RenderedTemplate)
     end.
 
 %% @doc Replaces tokens ('{{ tokenName }}') with the result from the token method call
@@ -127,17 +132,16 @@ render([[Regex, Function]|Tail], Template, Module) ->
 numerify(String) ->
     numerify(String, []).
 numerify([], Acc) ->
-    list_to_str(lists:flatten(Acc));
-numerify([X|Xs], Acc) when X =:= $# ->
-    N = fakerl:random_number(),
-    numerify(Xs, [Acc|[N]]).
-
-%% @doc Convert a list of integers into a string
--spec list_to_str([integer()]) -> string().
-list_to_str(L) when is_list(L) ->
-    L2 = [integer_to_list(X) || X <- L],
-    L3 = iolist_to_binary(L2),
-    binary_to_list(L3).
+    lists:flatten(Acc);
+numerify([X|Xs], Acc) ->
+    if 
+        X =:= $# ->
+            N = fakerl:random_number(),
+            NStr = erlang:integer_to_list(N),
+            numerify(Xs, [Acc|[NStr]]);
+        true ->
+            numerify(Xs, [Acc|[X]])
+    end.
 
 %% @doc Return new list by shuffling the members of list
 -spec shuffle(list()) -> list().

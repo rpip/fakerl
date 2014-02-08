@@ -20,3 +20,4 @@
 * Add streams module for dealing with huge list values
 * Improve the parser to support "{{var_name}}##"
 * Extensible generator system, so new generators can be added
+* Support template context so that "{{name}}" produces the same output when called.

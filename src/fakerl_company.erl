@@ -7,39 +7,28 @@
 %%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mawuli.me>
 %%%-------------------------------------------------------------------
 -module(fakerl_company).
--export([first_name/0, last_name/0, company_name/0]).
+-include("fakerl.hrl").
+-export([name/0,
+         suffix/0,
+         buzzwords/0,
+         bs/0
+        ]).
 
 
-%%%-------------------------------------------------------------------
-%%% API
-%%%-------------------------------------------------------------------
-first_name() ->
-    fakerl:random_element(first_names()).
+name() ->
+    fakerl:parse("company.name").
 
-last_name() ->
-    fakerl:random_element(last_names()).
+suffix() ->
+    fakerl:fetch("company.suffix").
 
-company_name() ->
-    fakerl:random_element(company_name_formats()).
+buzzwords() ->
+    catch_phrase("buzzwords", ?CATCH_PHRASE_LENGTH).
 
+bs() ->
+    catch_phrase("bs", ?CATCH_PHRASE_LENGTH).
 
-%%%-------------------------------------------------------------------
-%%% formats and helpers
-%%%-------------------------------------------------------------------
-last_names() ->
-    ["Mobile", "Oil", "Farms", "Friends"].
-
-first_names() ->
-    ["Merrill", "Goldman", "First", "Virgin"].
-
-company_name_formats() ->
-    ["{{first_name}} and {{last_name}}", 
-     "The {{first_name}} {{last_name}}", 
-    "{{first_name}} {{last_name}} {{company_suffix}}", 
-     "{{last_name}} and Associates"].
-
-company_suffix() ->
-    fakerl:random_element(company_suffixes()).
-
-company_suffixes() ->
-    ["Ltd", "Group", "LLC", "Holdings", "Partners", "Services"].
+catch_phrase(Section, Length) ->
+    Words = fakerl:fetch("company." ++ Section, all),
+    Words1 = fakerl:shuffle(Words),
+    Words2 = lists:sublist(Words1, Length),
+    string:join(Words2, " ").

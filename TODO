@@ -16,8 +16,14 @@
   11. User agent
   12. Internet
   13. Profile
+  14. Bitcoin
+  15. Code - ISBN generator
 * Locale specific fake data: Ghana, English, Swahili, French
 * Add streams module for dealing with huge list values
 * Improve the parser to support "{{var_name}}##"
 * Extensible generator system, so new generators can be added
-* Support template context so that "{{name}}" produces the same output when called.
+* Support optional template context so that "{{name}}" produces the same output when called.
+* Write Elixir Wrapper for Fakerl: faker
+* Custom data providers via parse_transform or behaviour
+* Regexify: Given a regular expression, attempt to generate a string
+* Update README: reference Ruby faker for locales inspiration

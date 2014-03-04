@@ -1,6 +1,6 @@
 {application, fakerl,
  [
-  {description, ""},
+  {description, "Application for generating fake data"},
   {vsn, "1"},
   {registered, []},
   {applications, [

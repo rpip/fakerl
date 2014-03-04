@@ -68,7 +68,7 @@ docs:
 	@$(REBAR) doc skip_deps=true
 
 pdf:
-	pandoc README -o README.pdf
+	pandoc README.md -o README.pdf
 
 shell: deps compile
 	- @$(REBAR) skip-deps=true eunit

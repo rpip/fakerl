@@ -10,11 +10,23 @@
 -module(fakerl_datetime).
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
 -include("fakerl.hrl").
--export([unixtime/0, date_time/0, date_time/1,
-         date/0, date/1, time/0, time/1, am_pm/0,
-         timezones/0, timezone/0, year/0, month_name/0, month/0,
-         day_of_month/0, day_of_week/0, century/0,
-        iso8601/0, country/0, countries/0]).
+-export([unixtime/0,
+         date_time/0,
+         date_time/1,
+         date/0,
+         date/1,
+         time/0,
+         time/1,
+         am_pm/0,
+         timezones/0,
+         timezone/0,
+         year/0,
+         month_name/0,
+         month/0,
+         day_of_month/0,
+         day_of_week/0,
+         century/0,
+         iso8601/0]).
 
 
 %%%-------------------------------------------------------------------
@@ -27,7 +39,7 @@ unixtime() ->
     qdate:to_unixtime(now()).
 
 date_time() ->
-    Pattern = fakerl:random_element(datetime_formats()),
+    Pattern = fakerl:fetch("datetime.datetime"),
     date_time(Pattern).
 
 date_time(Pattern) ->
@@ -40,7 +52,7 @@ iso8601() ->
 %% @doc Get a date string between January 1, 1970 and now
 %% example: '2008-11-27'
 date() ->
-    ?MODULE:date(fakerl:random_element(date_formats())).
+    ?MODULE:date(fakerl:fetch("date.date")).
 
 date(Pattern) ->
     qdate:to_string(Pattern, now()).
@@ -48,7 +60,7 @@ date(Pattern) ->
 %% @doc Get a time string (24h format by default)
 %% example: '15:02:34'
 time() ->
-    ?MODULE:time(fakel:random_element(time_formats())).
+    ?MODULE:time(fakel:fetch("datetime.time")).
 
 time(Pattern) ->
     qdate:to_string(Pattern, now()).
@@ -71,50 +83,12 @@ month_name() ->
 year() ->
     ?MODULE:date("Y").
 
-%% @doc Retunrn a randomly selected century'XVII'
+%% @doc Retunrn a randomly selected century: 'XVII'
 century() ->
-    fakerl:random_element(centuries()).
+    fakerl:fetch("datetime.centuries").
 
 timezones() ->
-    [Timezones ||
-        [{<<"timezones">>, Timezones},
-         {<<"code">>, _},
-         {<<"continent">>, _},
-         {<<"name">>, _},
-         {<<"capital">>, _}
-        ] <- countries()
-    ].
+    fakerl:fetch("address.timezones", all).
 
 timezone() ->
-    Timezones = fakerl:random_element(timezones),
-    fakerl:random_element(Timezones).
-
--spec countries() -> binary() | {error, Reason :: string()}.
-countries() ->
-    case file:read_file(?COUNTRIES_JSON_FILE) of
-        {ok, Bin} ->
-            jsx:decode(Bin);
-        {error, enoent} ->
-            error("Missing countries json file: " ++ ?COUNTRIES_JSON_FILE)
-    end.
-
-
-country() ->
-    fakerl:random_element(countries()).
-
-%%%-------------------------------------------------------------------
-%%% formats and helpers
-%%%-------------------------------------------------------------------
-centuries() ->
-    ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 
-     'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 
-     'XV', 'XVI','XVII', 'XVIII', 'XIX', 'XX', 'XXI'].
-
-date_formats() ->
-    ["Y-m-d"].
-
-time_formats() ->
-    ["h:m:s", "g:ia"].
-
-datetime_formats() ->
-    ["Y-m-d H:i:s T", "Y-m-d g:ia", "n/j/Y g:ia", "D, d M Y H:i:s O"].
+    fakerl:fetch("address.timezones").

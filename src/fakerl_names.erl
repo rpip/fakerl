@@ -21,24 +21,16 @@
 -spec name() -> Name when 
       Name :: list().
 name() ->
-    Pattern = fakerl:random_element(name_formats()),
-    fakerl:parse(Pattern, ?MODULE).
+    fakerl:parse("name.name", ?MODULE).
 
 %% @doc Returns a random 'first name'
 -spec first_name() -> Name when 
       Name :: list().
 first_name() ->
-    fakerl:random_element(?FIRST_NAMES).
+    fakerl:fetch("name.first_name").
 
 %% @doc Returns a random 'surname', also known as 'last name'.
 -spec last_name() -> Name when 
       Name :: list().
 last_name() ->
-    fakerl:random_element(?LAST_NAMES).
-
-
-%%%-------------------------------------------------------------------
-%%% formats and helpers
-%%%-------------------------------------------------------------------
-name_formats() ->
-    ["{{first_name}} {{last_name}}"].
+    fakerl:fetch("name.last_name").

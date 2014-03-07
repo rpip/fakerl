@@ -33,13 +33,20 @@
          fetch/2,
          parse/1, 
          parse/2,
+         tokenize/1,
          format/2,
          numerify/1,
          letterify/1,
          bothify/1,
          shuffle/1,
+         safe_var_idx_regex/1,
+         locale_data_key/1,
+         fetch_from_nodes/1,
          locale/0,
-         locale/1]).
+         locale/1,
+         locale_file/1,
+         config/1,
+         config/2]).
 
 
 %%%-------------------------------------------------------------------
@@ -122,7 +129,7 @@ random(From, To) ->
 
 %% @doc Returns key value in locale config
 fetch(Key) ->
-    Locale = locale()
+    Locale = locale(),
     Return = fetch(Key, Locale),
     case Return of
         {error, {notfound, _}} ->
@@ -132,12 +139,12 @@ fetch(Key) ->
                     %% Do this when key is missing in the chosen locale.
                    case fetch(Key, ?DEFAULT_LOCALE) of
                        {error, {notfound, _}} ->
-                           error("Missing key (" Key ++ ") in default locale config file: " ++ locale_file(Locale));
+                           error("Missing key (" ++ Key ++ ") in default locale config file: " ++ locale_file(Locale));
                        {ok, Value} ->
                            Value
                    end;
                 true ->
-                    error("Missing key (" Key ++ ") in locale config file: " ++ locale_file(Locale))
+                    error("Missing key (" ++ Key ++ ") in locale config file: " ++ locale_file(Locale))
             end;
          {ok, Value} ->
             Value
@@ -150,19 +157,39 @@ fetch(Key) ->
       Value :: string(),
       ErrMsg :: string().
 fetch(Key, Locale) ->
-    [Config] = yamerl:decode_file(locale_file(Locale)),
-    LocaleKey = Locale ++ "." ++ Key,
-    case kvc:path(LocaleKey, Config) of
+    Data = get_locale_data(Locale),
+    LocaleKey = atom_to_list(Locale) ++ "." ++ Key,
+    case kvc:path(LocaleKey, Data) of
         [] ->
             {error, {notfound, "Missing key in locale config file: " ++ Key}};
         Values ->
             {ok, random(Values)}
     end.
 
+%% @doc Returns the local data. Caches data if it's not already cached.
+-spec get_locale_data(Locale :: atom()) -> Data :: list().
+get_locale_data(Locale) ->
+    case config(locale_data_key(Locale)) of
+        {ok, Data} ->
+            Data;
+        _ ->
+            [Data] = yamerl:decode_file(locale_file(Locale)),
+            %% cache data
+            config(locale_data_key(Locale), Data),
+            Data
+    end.
+
+%% @doc Returns a key for setting/getting locale data
+-spec locale_data_key(Locale :: atom()) -> list().
+locale_data_key(Locale) ->
+    list_to_atom(atom_to_list(Locale) ++ "_data").
+
+%% @doc Returns path to locale data file
+-spec locale_file(Locale :: atom()) -> Filepath :: list().
 locale_file(Locale) when is_atom(Locale) ->
-    atom_to_list(Locale);
+    locale_file(atom_to_list(Locale));
 locale_file(Locale) ->
-    ?LOCALES_DIR ++ Locale ++ ".yml".
+    filename:join([?LOCALES_DIR, Locale ++ ".yaml"]).
 
 format([], _Ctx) ->
     {error, empty_string};
@@ -177,7 +204,7 @@ format(Template, Ctx) ->
                     error("Template index out of range");
                 true ->
                     bothify(RenderedTemplate)
-            end,            
+            end            
     end.
 render_format_string([], Template, _Ctx) ->
     Bin = iolist_to_binary(Template),
@@ -196,45 +223,94 @@ safe_var_idx_regex(Index) when is_integer(Index) ->
 safe_var_idx_regex(Index) ->
     lists:flatten(io_lib:format("{(~s)}", [Index])).
 
+%% @doc Breakup template into tokens and regex matches
+-spec tokenize(Template::string()) -> nomatch | {match, Matches :: list()}.
+tokenize(Template) ->
+    re:run(Template, ?VAR_REGEX, [global, {capture, all, list}]).
+
 %% @doc Compiles the template within the main fakerl module context
-parse(Template) ->
-    parse(Template, ?MODULE).
-%% @doc Compiles the format template into a string.
--spec parse(Template, Module) -> {Status, string()} when
-      Template :: string(),
-      Module :: atom(),
-      Status :: error | match | nomatch.
-parse([], _Module) ->
-    {error, empty_string};
-parse(Template, Module) ->
-    case re:run(Template, ?VAR_REGEX, [global, {capture, all, list}]) of 
+parse(TemplateNode) ->
+    case tokenize(TemplateNode) of
         nomatch ->
-            {error, nomatch};
-        {match, Matches} ->
-            RenderedTemplate = render(Matches, Template, Module),
-            bothify(RenderedTemplate)
+            Template = fetch(TemplateNode),
+            Tokens = string:tokens(TemplateNode, "."),
+            Node = lists:nth(1, Tokens),
+            parse(Template, Node);
+        {match, RegexMatches} ->
+            Match = lists:nth(1, RegexMatches),
+            Key = lists:nth(2, Match),
+            Node = lists:nth(1, string:tokens(Key, ".")),
+            render(RegexMatches, TemplateNode, Node)
     end.
 
-%% @doc Replaces tokens ('{{ tokenName }}') with the result from the token method call
+%% @doc Compiles the format template into a string.
+-spec parse(Template, Node) -> {Status, string()} when
+      Template :: string(),
+      Node :: atom(),
+      Status :: error | match | nomatch.
+parse([], _Node) ->
+    {error, empty_string};
+parse(Template, Node) ->
+    Tokens = tokenize(Template),
+    parse_template(Tokens, Template, Node).
+parse_template(nomatch, Template, _Node) ->
+    bothify(Template);
+parse_template({match, Matches}, Template, Node) ->
+    Template1 = render(Matches, Template, Node),
+    parse(Template1, Node).
+
+%% @doc Replaces tokens ('{{ tokenName }}') with the result from the key values in the nodes
 %% in the given module
--spec render(RegexMatches, Template, Module) -> RenderedTemplate when
+-spec render(RegexMatches, Template, Node) -> RenderedTemplate when
       RegexMatches :: regex_match_list(),
       Template :: string(),
-      Module :: atom(),
+      Node :: atom() | string(),
       RenderedTemplate :: list().
-render([], Template, _Module) ->
-    Bin = iolist_to_binary(Template),
-    binary_to_list(Bin);
-render([[Regex, Function]|Tail], Template, Module) ->
-    Function1 = list_to_atom(Function),
-    Value = try Module:Function1() of 
-               Result -> Result
-            catch
-                error:undef -> 
-                    ?MODULE:Function1()
-            end,
+render([], Template, Node) ->
+    Template1 = iolist_to_binary(Template),
+    Template2 = binary_to_list(Template1),
+    parse(Template2, Node);
+render(RegexMatches, Template, Node) when is_atom(Node) ->
+    render(RegexMatches, Template, atom_to_list(Node));
+render([[Regex, Key]|Tail], Template, Node) ->
+    Value = try fetch(Key) of
+                KeyValue ->
+                    KeyValue
+            catch error:_ ->
+                    Key1 = Node ++ "." ++ Key,
+                    try fetch(Key1) of
+                        KV ->
+                            KV
+                    catch error:ErrMsg ->
+                            case fetch_from_nodes(Key) of
+                                {error, notfound} ->
+                                    throw(ErrMsg);
+                                Val ->
+                                    Val
+                            end
+                    end
+             end,    
     Template1 = re:replace(Template, Regex, Value),
-    render(Tail, Template1, Module).
+    render(Tail, Template1, Node).
+
+%% Searches for key in all the parent nodes
+-spec fetch_from_nodes(Key::string()) -> string() | {error, notfound}.
+fetch_from_nodes(Key) ->
+    Data = get_locale_data(locale()),
+    LocaleKey = atom_to_list(locale()),
+    Nodes = lists:map(fun({Name, _Fields}) -> Name end, kvc:path(LocaleKey, Data)),
+    fetch_from_nodes(Key, Nodes).
+
+fetch_from_nodes(_, []) ->
+    {error, notfound};
+fetch_from_nodes(Key, [Node|Rest]) ->
+    NodeKey = Node ++ "." ++ Key,
+    try fetch(NodeKey) of
+        Value ->
+            Value
+    catch error:_ErrMsg ->
+            fetch_from_nodes(Key, Rest)
+    end.
 
 %% @doc Converts a string of N "#" into N integers
 -spec numerify(String :: string()) -> [integer()].
@@ -279,15 +355,24 @@ shuffle(L) when is_list(L) ->
 
 %% @doc Sets the locale
 locale(Locale) when is_atom(Locale) ->
-    locale(atom_to_list(Locale));
-locale(Locale) ->
-    application:set_env(fakerl, locale, Locale).
-
+    config(locale, Locale);
+locale(_) ->
+    error("Locale key/name must be an atom").
 %% @doc Returns the locale
 locale() ->
-    case application:get_env(fakerl, locale) of
+    case config(locale) of
         undefined ->
             ?DEFAULT_LOCALE;
-        Locale ->
+        {ok, Locale} ->
             Locale
     end.
+
+%% @doc Set config
+-spec config(Key :: atom(), Value :: any()) -> any().
+config(Key, Value) ->
+    application:set_env(fakerl, Key, Value).
+
+%% @doc Get config 
+-spec config(Key :: atom()) -> any().
+config(Key) ->
+    application:get_env(fakerl, Key).

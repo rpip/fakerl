@@ -10,8 +10,7 @@
 -module(fakerl_internet).
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
 -include("fakerl.hrl").
--export([
-         email/0, 
+-export([email/0, 
          safe_email/0, 
          free_email/0,
          company_email/0, 
@@ -25,8 +24,7 @@
          uri/0, 
          tld/0, 
          uri_page/0, 
-         slug/0 
-        ]).
+         slug/0]).
 
 
 %%%-------------------------------------------------------------------

@@ -9,37 +9,77 @@
 -module(fakerl_tests).
 -include_lib("eunit/include/eunit.hrl").
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
--define(FIRST_NAME, "Mawuli").
--define(LAST_NAME, "Adzaku").
--define(TEMPLATE, "My first name is {{first_name}} and my last name is {{last_name}}").
--define(INAVLID_TEMPLATE, "My first name is {first_name} and my last name is {{last_name}.").
--export([first_name/0, last_name/0]).
+-include("fakerl.hrl").
+
+%%%----------------------------------------------------------------------
+%%% Prelude
+%%%----------------------------------------------------------------------
+codebox_test_() ->
+    {spawn, 
+     {setup,
+      fun setup/0,
+      fun teardown/1,
+      [
+       {"Check application locale",
+        fun locale/0},
+       {"Retrieve the locale data key",
+        fun locale_data_key/0},
+       {"Random data retrieval/generation",
+        fun random/0},
+       {"Index based variables",
+        fun safe_var_idx_regex/0},
+       {"Test number generation from templates",
+        fun numerify/0},
+       {"Test character generation",
+        fun letterify/0},
+       {"Parse an empty template string",
+        fun parse_empty_string/0},
+       {"Test configs",
+        fun config/0}
+     ]
+     }
+    }.
+
 
 %%%-------------------------------------------------------------------
-%%% TESTS
+%%% Setup / Cleanup
 %%%-------------------------------------------------------------------
-parser_empty_string_test() ->
-    Response = fakerl:parse("", ?MODULE),
-    ?assertEqual({error, empty_string}, Response).
+setup() ->
+    fakerl:locale(?DEFAULT_LOCALE).
 
-parser_nomatch_test() ->
-    Response = fakerl:parse(?INAVLID_TEMPLATE, ?MODULE),
-    ?assertEqual({error, nomatch}, Response).
-
-parser_match_test() ->
-    RawText = "My first name is " ++ first_name() ++ " and my last name is " ++ last_name(),
-    RenderedTemplate = fakerl:parse(?TEMPLATE, ?MODULE),
-    ?assertEqual(RawText, RenderedTemplate).
-
-name_test() ->
-    Fullname = ?FIRST_NAME ++ " " ++ ?LAST_NAME,
-    ?assertNotEqual(Fullname, fakerl:name()).
+teardown(_) ->
+    ok.
 
 %%%-------------------------------------------------------------------
-%%% HELPERS
+%%% tests
 %%%-------------------------------------------------------------------
-first_name() ->
-    ?FIRST_NAME.
+locale() ->
+    ?assertEqual(?DEFAULT_LOCALE, fakerl:locale()).
 
-last_name() ->
-    ?LAST_NAME.
+locale_data_key() ->
+    ?assertEqual(en_data, fakerl:locale_data_key(?DEFAULT_LOCALE)).
+
+random() ->
+    ?assert($a =< fakerl:random_letter()),
+    N = fakerl:random_number(),
+    ?assert(lists:member(N, lists:seq(0,9))).
+
+safe_var_idx_regex() ->
+    ?assertEqual("{(0)}", fakerl:safe_var_idx_regex("0")),
+    ?assertEqual("{(0)}", fakerl:safe_var_idx_regex(0)).
+    
+parse_empty_string() ->
+    ?assertEqual({error, empty_string}, fakerl:parse("", address)).
+
+numerify() ->
+    Number = list_to_integer(fakerl:numerify("#")),
+    ?assert(Number =< 10).
+
+letterify() ->
+    Letter = fakerl:letterify("?"),
+    AToZ = lists:seq($a,$z),
+    ?assert(string:rstr(AToZ, Letter) > 0).
+
+config() ->
+    fakerl:config(foo, bar),
+    ?assertEqual({ok, bar}, fakerl:config(foo)).

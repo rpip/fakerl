@@ -22,7 +22,7 @@
 %%% constants, miscellaneuos/helper fucntions
 %%%-------------------------------------------------------------------
 %% regex for {{variable_name}}
--define(VAR_REGEX, "{{([A-Za-z0-9_]+)}}").
+-define(VAR_REGEX, "{{([A-Za-z0-9_\.]+)}}").
 
 %% regex for format strings: {0}, {1}
 -define(VAR_INDEX_REGEX, "{([0-9]+)}").
@@ -41,8 +41,8 @@
 -define(CATCH_PHRASE_LENGTH, 10).
 
 %% locales
--define(DEFAULT_LOCALE, "en").
--define(LOCALES_DIR, filename:join([code:priv_dir(fakerl), "locales"]).
+-define(DEFAULT_LOCALE, en).
+-define(LOCALES_DIR, filename:join([code:priv_dir(fakerl), "locales"])).
 
 %% credit card prefixes
 -define(VisaPrefixList,
@@ -126,4 +126,3 @@
 
 %% Turns a record into a proplist
 -define(R2P(Record,RecordType), lists:zip(record_info(fields, RecordType), tl(tuple_to_list(Record)))).
-

@@ -55,11 +55,14 @@ en:
       - "{{first_name}}.{{last_name}}"
       - "{{first_name}}##"
       - "?{{last_name}}"
-    email: 
+    domain_name:
+      - "{{name.first_name}}.{{tlds}}"
+      - "{{name.last_name}}.{{tlds}}"
+    email:
       - "{{user_name}}@{{domain_name}}"
       - "{{user_name}}@{{free_email_domain}}"
     url:
-      - "http://www.{{domain_name}}/" 
+      - "http://www.{{domain_name}}/"
       - "http://{{domain_name}}/"
     uri:
       - "{{url}}"
@@ -100,18 +103,18 @@ en:
 
   user_agent:
     user_agent:  [firefox, chrome, internet_explorer, opera, safari]
-    windows_platform_tokens: 
-        - Windows NT 6.2 
-        - Windows NT 6.1 
-        - Windows NT 6.0 
+    windows_platform_tokens:
+        - Windows NT 6.2
+        - Windows NT 6.1
+        - Windows NT 6.0
         - Windows NT 5.2
         - Windows NT 5.1
         - Windows NT 5.01
         - Windows NT 5.0
-        - Windows NT 4.0 
+        - Windows NT 4.0
         - Windows 98; Win 9x 4.90
-        - Windows 98 
-        - Windows 95 
+        - Windows 98
+        - Windows 95
         - Windows CE
     linux_processors: [i686, x86_64]
     mac_processors: [Intel, PPC, U; Intel, U; PPC]

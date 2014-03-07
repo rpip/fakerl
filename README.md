@@ -138,8 +138,9 @@ Credits
 --------
 
 - [joke2k][joke2k] / [Faker][python-faker]
-
+- [stympy][stympy] / [Faker][ruby-faker]
 
 [python-faker]: https://github.com/joke2k/Faker "Python faker"
 [ruby-faker]: https://github.com/stympy/faker "Ruby faker"
 [joke2k]: https://github.com/joke2k "joke2k"
+[stympy]: https://github.com/stympy "Benjamin Curtis"

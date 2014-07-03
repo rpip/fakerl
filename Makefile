@@ -1,6 +1,7 @@
 APPNAME = fakerl
 DIALYZER = dialyzer
 REBAR = $(shell which rebar)
+REBAR += $(REBAR_ARGS)
 ERL = $(shell which erl)
 ERLFLAGS= -pa $(CURDIR)/.eunit -pa $(CURDIR)/ebin -pa $(CURDIR)/deps/*/ebin
 
@@ -48,13 +49,14 @@ distclean: clean
 	- rm -rvf $(CURDIR)/deps
 	- rm -rf $(CURDIR)/doc/*
 
+tests: REBAR_ARGS = -C rebar.test.config
 tests: clean app eunit ct
 
 eunit: compile clean
-	@$(REBAR) -C rebar.test.config eunit skip_deps=true
+	@$(REBAR) eunit skip_deps=true
 
 ct:
-	@$(REBAR) -C rebar.test.config ct skip_deps=true
+	@$(REBAR) ct skip_deps=true
 
 build-plt:
 	@$(DIALYZER) --build_plt --output_plt .$(APPNAME)_dialyzer.plt \

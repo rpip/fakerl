@@ -12,8 +12,9 @@ fill-in your persistence to stress test it, or anonymize data taken from a produ
 
 Fakerl is inspired by Python's [Faker][python-faker] and Ruby's [Faker][ruby-faker].
 
-*work in progress*
+[![Build status](https://travis-ci.org/mawuli-ypa/fakerl.svg "Build status")](https://travis-ci.org/mawuli-ypa/fakerl.svg)
 
+*work in progress*
 
 ## How it works
 

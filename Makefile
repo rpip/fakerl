@@ -1,12 +1,13 @@
 APPNAME = fakerl
 DIALYZER = dialyzer
-REBAR = $(shell which rebar)
-REBAR += $(REBAR_ARGS)
 ERL = $(shell which erl)
 ERLFLAGS= -pa $(CURDIR)/.eunit -pa $(CURDIR)/ebin -pa $(CURDIR)/deps/*/ebin
+REBAR = ./rebar $(REBAR_ARGS)
+REBAR_URL := https://github.com/rebar/rebar/wiki/rebar
 
 .PHONY: all compile docs clean tests build-plt dialyze shell distclean pdf \
 update-deps rebuild
+
 
 # ================================================================
 # Verify that porgrames needed by this Makefile are available
@@ -15,17 +16,12 @@ ifeq ($(ERL),)
 $(error "Erlang not running on this system")
 endif
 
-ifeq ($(REBAR),)
-$(error "Rebar not running on this system")
-endif
-
-
-all: app
-
 # ==============================================================
 # Make build rules
 # ==============================================================
-app: deps
+all: app
+
+app: rebar deps
 	@$(REBAR) compile
 
 deps:
@@ -75,3 +71,9 @@ pdf:
 shell: deps compile
 	- @$(REBAR) skip-deps=true eunit
 	@$(ERL) $(ERLFLAGS)
+
+rebar:
+	$(ERL) -noshell -s inets -s ssl \
+	-eval '{ok, saved_to_file} = httpc:request(get, {"$(REBAR_URL)", []}, [], [{stream, "./rebar"}])' \
+	-s init stop
+	chmod +x ./rebar

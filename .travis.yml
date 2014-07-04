@@ -3,7 +3,7 @@ otp_release:
   - 17.0
   - R16B
   - R15B03
-script: make tests
+script: make && make tests
 branches:
   only:
     - master

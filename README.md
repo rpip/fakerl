@@ -12,7 +12,7 @@ fill-in your persistence to stress test it, or anonymize data taken from a produ
 
 Fakerl is inspired by Python's [Faker][python-faker] and Ruby's [Faker][ruby-faker].
 
-[![Build status](https://travis-ci.org/mawuli-ypa/fakerl.svg "Build status")](https://travis-ci.org/mawuli-ypa/fakerl.svg)
+[![Build status](https://travis-ci.org/mawuli-ypa/fakerl.svg "Build status")](https://travis-ci.org/mawuli-ypa/fakerl)
 
 *work in progress*
 
@@ -99,8 +99,8 @@ Fakerl requires make and rebar to build.
 
 To build, go to the Fakerl directory and simply type:
 
-```erlang
-make
+```bash
+make && make tests
 ```
 
 To run fakerl in an Erlang shell, simple type:

@@ -44,6 +44,16 @@
 -define(DEFAULT_LOCALE, en).
 -define(LOCALES_DIR, filename:join([code:priv_dir(fakerl), "locales"])).
 
+%% file category
+-define(FILE_CATEGORIES, [application,
+                          audio,
+                          image,
+                          message,
+                          model,
+                          multipart,
+                          text,
+                          video]).
+
 %% credit card prefixes
 -define(VisaPrefixList,
         [

@@ -825,7 +825,7 @@ en:
       - text/plain # Textual data; Defined in RFC 2046 and RFC 3676
       - text/vcard # vCard (contact information); Defined in RFC 6350
       - text/xml  # Extensible Markup Language; Defined in RFC 3023
-    video:
+    video_mime_types:
       - video/mpeg # MPEG-1 video with multiplexed audio; Defined in RFC 2045 and RFC 2046
       - video/mp4 # MP4 video; Defined in RFC 4337
       - video/ogg # Ogg Theora or other video (with audio); Defined in RFC 5334

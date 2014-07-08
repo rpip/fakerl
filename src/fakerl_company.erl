@@ -8,11 +8,11 @@
 %%%-------------------------------------------------------------------
 -module(fakerl_company).
 -include("fakerl.hrl").
+
 -export([name/0,
          suffix/0,
          buzzwords/0,
-         bs/0
-        ]).
+         bs/0]).
 
 %% @doc Retruns a full company name
 -spec name() -> string().

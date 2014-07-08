@@ -46,7 +46,8 @@
          locale/1,
          locale_file/1,
          config/1,
-         config/2]).
+         config/2,
+         get_locale_data/1]).
 
 
 %%%-------------------------------------------------------------------
@@ -178,7 +179,6 @@ get_locale_data(Locale) ->
             config(locale_data_key(Locale), Data),
             Data
     end.
-
 %% @doc Returns a key for setting/getting locale data
 -spec locale_data_key(Locale :: atom()) -> list().
 locale_data_key(Locale) ->
@@ -189,7 +189,7 @@ locale_data_key(Locale) ->
 locale_file(Locale) when is_atom(Locale) ->
     locale_file(atom_to_list(Locale));
 locale_file(Locale) ->
-    filename:join([?LOCALES_DIR, Locale ++ ".yaml"]).
+    filename:join([priv_dir(), "locales", Locale ++ ".yaml"]).
 
 format([], _Ctx) ->
     {error, empty_string};
@@ -376,3 +376,14 @@ config(Key, Value) ->
 -spec config(Key :: atom()) -> any().
 config(Key) ->
     application:get_env(fakerl, Key).
+
+%% @doc
+-spec priv_dir() -> file:filename().
+priv_dir() ->
+    case code:priv_dir(?MODULE) of
+        {error, bad_name} ->
+            Ebin = filename:dirname(code:which(?MODULE)),
+            filename:join(filename:dirname(Ebin), "priv");
+        Dir ->
+            Dir
+    end.

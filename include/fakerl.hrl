@@ -42,7 +42,7 @@
 
 %% locales
 -define(DEFAULT_LOCALE, en).
--define(LOCALES_DIR, filename:join([code:priv_dir(fakerl), "locales"])).
+%%-define(LOCALES_DIR, filename:join([code:priv_dir(fakerl), "locales"])).
 
 %% file category
 -define(FILE_CATEGORIES, [application,

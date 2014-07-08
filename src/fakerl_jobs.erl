@@ -9,5 +9,8 @@
 -module(fakerl_jobs).
 -export([job/0]).
 
+
+%% @doc Returns a job title
+-spec job() -> string().
 job() ->
     fakerl:fetch("jobs.jobs").

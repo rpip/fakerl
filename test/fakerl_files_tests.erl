@@ -51,48 +51,48 @@ teardown(_) ->
 
 application_mime_types(Data) ->
     MimeType = fakerl_files:application_mime_types(),
-    Bool = lists:member(MimeType, kvc:path("application_mime_types", Data)),
-    ?_assert(Bool).
+    True = lists:member(MimeType, kvc:path("application_mime_types", Data)),
+    ?_assert(True).
 
 video_mime_types(Data) ->
     MimeType = fakerl_files:video_mime_types(),
-    Bool = lists:member(MimeType, kvc:path("video_mime_types", Data)),
-    ?_assert(Bool).
+    True = lists:member(MimeType, kvc:path("video_mime_types", Data)),
+    ?_assert(True).
 
 audio_mime_types(Data) ->
     MimeType = fakerl_files:audio_mime_types(),
-    Bool = lists:member(MimeType, kvc:path("audio_mime_types", Data)),
-    ?_assert(Bool).
+    True = lists:member(MimeType, kvc:path("audio_mime_types", Data)),
+    ?_assert(True).
 
 image_mime_types(Data) ->
     MimeType = fakerl_files:image_mime_types(),
-    Bool = lists:member(MimeType, kvc:path("image_mime_types", Data)),
-    ?_assert(Bool).
+    True = lists:member(MimeType, kvc:path("image_mime_types", Data)),
+    ?_assert(True).
 
 message_mime_types(Data) ->
     MimeType = fakerl_files:message_mime_types(),
-    Bool = lists:member(MimeType, kvc:path("message_mime_types", Data)),
-    ?_assert(Bool).
+    True = lists:member(MimeType, kvc:path("message_mime_types", Data)),
+    ?_assert(True).
 
 model_mime_types(Data) ->
     MimeType = fakerl_files:model_mime_types(),
-    Bool = lists:member(MimeType, kvc:path("model_mime_types", Data)),
-    ?_assert(Bool).
+    True = lists:member(MimeType, kvc:path("model_mime_types", Data)),
+    ?_assert(True).
 
 multipart_mime_types(Data) ->
     MimeType = fakerl_files:multipart_mime_types(),
-    Bool = lists:member(MimeType, kvc:path("multipart_mime_types", Data)),
-    ?_assert(Bool).
+    True = lists:member(MimeType, kvc:path("multipart_mime_types", Data)),
+    ?_assert(True).
 
 text_mime_types(Data) ->
     MimeType = fakerl_files:text_mime_types(),
-    Bool = lists:member(MimeType, kvc:path("text_mime_types", Data)),
-    ?_assert(Bool).
+    True = lists:member(MimeType, kvc:path("text_mime_types", Data)),
+    ?_assert(True).
 
 mime_type(Data) ->
     MimeType = fakerl_files:mime_type(),
     AllMimeTyes = [ MimeTypes || {_FileCategory, MimeTypes } <- Data ],
-    Bool = lists:member(MimeType, lists:merge(AllMimeTyes)),
-    ?_assert(Bool).
+    True = lists:member(MimeType, lists:merge(AllMimeTyes)),
+    ?_assert(True).
 
     

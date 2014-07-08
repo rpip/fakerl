@@ -7,18 +7,18 @@
 %%% Created :  8 Feb 2014 by Mawuli Adzaku <mawuli@mawuli.me>
 %%%-------------------------------------------------------------------
 -module(fakerl_files).
--include("include/fakerl.hrl").
+-include("fakerl.hrl").
 
-- export([application_mime_types/0,
-          audio_mime_types/0,
-          image_mime_types/0,
-          message_mime_types/0,
-          model_mime_types/0,
-          multipart_mime_types/0,
-          text_mime_types/0,
-          video_mime_types/0,
-          mime_type/0
-         ]).
+-export([application_mime_types/0,
+         audio_mime_types/0,
+         image_mime_types/0,
+         message_mime_types/0,
+         model_mime_types/0,
+         multipart_mime_types/0,
+         text_mime_types/0,
+         video_mime_types/0,
+         mime_type/0
+        ]).
 
 application_mime_types() ->
     fakerl:fetch("files.application_mime_types").
@@ -66,7 +66,7 @@ mime_type() ->
 mime_type(Category) when is_atom(Category) ->    
     case lists:member(Category, ?FILE_CATEGORIES) of
         true ->
-            proplist:get_value(Category, mime_types());
+            proplists:get_value(Category, mime_types());
         false ->
             {error, {invalid_category, Category}}
     end.

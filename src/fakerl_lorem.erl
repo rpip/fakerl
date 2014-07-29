@@ -8,10 +8,19 @@
 %%%-------------------------------------------------------------------
 -module(fakerl_lorem).
 -include("fakerl.hrl").
--export([word_list/0, word/0, words/1,
-         sentence/0, sentence/1, sentences/0, 
-         sentences/1, paragraph/0, paragraph/1,
-         paragraphs/0, paragraphs/1, text/0,
+
+-export([word_list/0,
+         word/0,
+         words/1,
+         sentence/0,
+         sentence/1,
+         sentences/0, 
+         sentences/1,
+         paragraph/0,
+         paragraph/1,
+         paragraphs/0,
+         paragraphs/1,
+         text/0,
          text/1]).
 
 

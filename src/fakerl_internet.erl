@@ -7,9 +7,11 @@
 %%% todo: ipv4, ipv6, slugs
 %%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mhp>
 %%%-------------------------------------------------------------------
+
 -module(fakerl_internet).
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
 -include("fakerl.hrl").
+
 -export([email/0, 
          safe_email/0, 
          free_email/0,

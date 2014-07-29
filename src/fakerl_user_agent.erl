@@ -6,7 +6,9 @@
 %%% @end
 %%% Created :  8 Feb 2014 by Mawuli Adzaku <mawuli@mawuli.me>
 %%%-------------------------------------------------------------------
+
 -module(fakerl_user_agent).
+
 -export([mac_processor/0,
          linux_processor/0,
          user_agent/0,

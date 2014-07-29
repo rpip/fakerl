@@ -3,10 +3,9 @@
 * Write tests for the Erlang data providers
 * Add documentation, including a comprehensive README
 * Add fake data providers:
-  5. File
   14. Bitcoin
   15. Code - ISBN generator
 * Add streams module for dealing with huge list values
 * Support optional template context so that "{{name}}" produces the same output when called.
-* Write Elixir Wrapper for Fakerl: faker
 * Regexify: Given a regular expression, attempt to generate a string
+* Refactor: remove all exceptions and thrown errors.

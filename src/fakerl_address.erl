@@ -8,19 +8,19 @@
 %%%-------------------------------------------------------------------
 -module(fakerl_address).
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
--export([country/0, 
-         countries/0, 
-         cities/0, 
-         city/0, 
-         city_suffix/0, 
-         street_suffix/0, 
-         street_name/0, 
+-export([country/0,
+         countries/0,
+         cities/0,
+         city/0,
+         city_suffix/0,
+         street_suffix/0,
+         street_name/0,
          street_address/0,
-         postcode/0, 
-         building_number/0, 
+         postcode/0,
+         building_number/0,
          address/0,
          geo_coordinate/0,
-         longitude/0, 
+         longitude/0,
          latitude/0]).
 
 
@@ -50,7 +50,7 @@ city() ->
     fakerl:parse(Format, ?MODULE).
 
 street_name() ->
-    fakerl:parse("address.street_name", ?MODULE).
+    fakerl:parse("{{ address.street_name }}", ?MODULE).
 
 street_address() ->
     Format = fakerl:fetch("address.street_address"),
@@ -63,7 +63,7 @@ postcode() ->
 %% @doc Generate an address
 %% Example: '791 Crist Parks, Sashabury, IL 86039-9874'
 address() ->
-    fakerl:parse("address.address", ?MODULE).
+    fakerl:parse("{{ address.address }}", ?MODULE).
 
 country() ->
     fakerl:fetch("address.country").

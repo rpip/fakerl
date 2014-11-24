@@ -9,3 +9,14 @@
 * Support optional template context so that "{{name}}" produces the same output when called.
 * Regexify: Given a regular expression, attempt to generate a string
 * Refactor: remove all exceptions and thrown errors.
+* Extend template to support filters
+* Add escript CLI
+   Examples:
+     1.$ fakerl profile ssn,birthdate
+     2.$ fakerl "Hi there! My name us {{ name.name }}"
+     3.$ faker address
+* Add support for embedding Erlang code in the template
+* Add property based test generators.
+  Examples:
+     1. int and list of 10 ints: "{{ int }} {{ list(int,10) }}"
+     2. dict of int * string and string of 20 characters "{{ dict(int, string) }}, {{ string(char(20)) }}"

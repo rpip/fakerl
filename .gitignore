@@ -1,0 +1,12 @@
+.*_dialyzer.plt
+erl_crash.dump
+*.beam
+rebar
+.rebar/
+deps/
+ebin/
+doc/
+*~
+.eunit/
+.#*
+#*

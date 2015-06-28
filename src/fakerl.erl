@@ -29,7 +29,8 @@
          random/1,
          random/2]).
 
--export([fetch/1,
+-export([start/0,
+         fetch/1,
          fetch/2,
          parse/1,
          parse/2,
@@ -49,6 +50,12 @@
          config/2,
          get_locale_data/1]).
 
+
+%%%-------------------------------------------------------------------
+%%% Start fakerl
+%%%-------------------------------------------------------------------
+start() ->
+    application:start(?MODULE).
 
 %%%-------------------------------------------------------------------
 %%% Interface to commonly used fake data generators

@@ -1,8 +1,7 @@
 APPNAME = fakerl
 DIALYZER = dialyzer
 ERL = $(shell which erl)
-EVAL_FAKERL = -eval "application:start(fakerl)"
-ERLFLAGS= -pa $(CURDIR)/.eunit -pa $(CURDIR)/ebin -pa $(CURDIR)/deps/*/ebin $(EVAL_FAKERL)
+ERLFLAGS= -pa $(CURDIR)/.eunit -pa $(CURDIR)/ebin -pa $(CURDIR)/deps/*/ebin -s $(APPNAME)
 REBAR = ./rebar $(REBAR_ARGS)
 REBAR_URL := https://github.com/rebar/rebar/wiki/rebar
 

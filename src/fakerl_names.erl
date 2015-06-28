@@ -21,7 +21,7 @@
 -spec name() -> Name when
       Name :: list().
 name() ->
-    fakerl:parse("{{ name.name }}", ?MODULE).
+    fakerl:parse("{{name.name}}", ?MODULE).
 
 %% @doc Returns a random 'first name'
 -spec first_name() -> Name when

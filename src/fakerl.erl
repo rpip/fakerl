@@ -12,11 +12,11 @@
 
 %% Interface to common functions
 -export([first_name/0,
-         last_name/0, 
+         last_name/0,
          user_name/0,
-         name/0, 
-         address/0, 
-         text/0, 
+         name/0,
+         address/0,
+         text/0,
          company/0,
          country/0]).
 
@@ -31,7 +31,7 @@
 
 -export([fetch/1,
          fetch/2,
-         parse/1, 
+         parse/1,
          parse/2,
          tokenize/1,
          format/2,
@@ -72,7 +72,7 @@ text() ->
     fakerl_lorem:text().
 
 company() ->
-    fakerl_company:company_name().
+    fakerl_company:name().
 
 country() ->
     fakerl_datetime:country().
@@ -124,7 +124,7 @@ random(L) when is_list(L) ->
 -spec random(From, To) -> RandomElement when
       From :: integer(),
       To :: integer(),
-      RandomElement :: any().     
+      RandomElement :: any().
 random(From, To) ->
    crypto:rand_uniform(From, To).
 
@@ -134,7 +134,7 @@ fetch(Key) ->
     Return = fetch(Key, Locale),
     case Return of
         {error, {notfound, _}} ->
-            if 
+            if
                 Locale /= ?DEFAULT_LOCALE ->
                     %% Look for key in default locale.
                     %% Do this when key is missing in the chosen locale.
@@ -194,17 +194,17 @@ locale_file(Locale) ->
 format([], _Ctx) ->
     {error, empty_string};
 format(Template, Ctx) ->
-    case re:run(Template, ?VAR_INDEX_REGEX, [global, {capture, all, list}]) of 
+    case re:run(Template, ?VAR_INDEX_REGEX, [global, {capture, all, list}]) of
         nomatch ->
             {error, nomatch};
         {match, Matches} ->
             RenderedTemplate = render_format_string(Matches, Template, Ctx),
-            if 
+            if
                 length(Matches) < length(Ctx) ->
                     error("Template index out of range");
                 true ->
                     bothify(RenderedTemplate)
-            end            
+            end
     end.
 render_format_string([], Template, _Ctx) ->
     Bin = iolist_to_binary(Template),
@@ -289,7 +289,7 @@ render([[Regex, Key]|Tail], Template, Node) ->
                                     Val
                             end
                     end
-             end,    
+             end,
     Template1 = re:replace(Template, Regex, Value),
     render(Tail, Template1, Node).
 
@@ -319,7 +319,7 @@ numerify(String) ->
 numerify([], Acc) ->
     lists:flatten(Acc);
 numerify([X|Xs], Acc) ->
-    if 
+    if
         X =:= $# ->
             N = fakerl:random_number(),
             NStr = erlang:integer_to_list(N),
@@ -334,7 +334,7 @@ letterify(String) ->
 letterify([], Acc) ->
     lists:flatten(Acc);
 letterify([X|Xs], Acc) ->
-    if 
+    if
         X =:= $? ->
             Letter = fakerl:random_letter(),
             letterify(Xs, [Acc|[Letter]]);
@@ -372,7 +372,7 @@ locale() ->
 config(Key, Value) ->
     application:set_env(fakerl, Key, Value).
 
-%% @doc Get config 
+%% @doc Get config
 -spec config(Key :: atom()) -> any().
 config(Key) ->
     application:get_env(fakerl, Key).

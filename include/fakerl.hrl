@@ -22,7 +22,7 @@
 %%% constants, miscellaneuos/helper fucntions
 %%%-------------------------------------------------------------------
 %% regex for {{variable_name}}
--define(VAR_REGEX, "{{([A-Za-z0-9_\.]+)}}").
+-define(VAR_REGEX, "{{\\s*([A-Za-z0-9_\.]+)\\s*}}").
 
 %% regex for format strings: {0}, {1}
 -define(VAR_INDEX_REGEX, "{([0-9]+)}").
@@ -35,7 +35,7 @@
 -define(DEFAULT_PARAGRAPH_LENGTH, 3).
 -define(DEFAULT_PARAGRAPH_SENTENCE_LENGTH, 3).
 -define(LOWER_BOUND, 0).
--define(COUNTRIES_JSON_FILE, filename:join([code:priv_dir(fakerl), "countries.json"])). 
+-define(COUNTRIES_JSON_FILE, filename:join([code:priv_dir(fakerl), "countries.json"])).
 -define(UPPER_BOUND, 10).
 -define(ValidCreditCardCharactersPattern, '^[0-9 ]*$').
 -define(CATCH_PHRASE_LENGTH, 10).
@@ -92,7 +92,7 @@
         ]
        ).
 
--define(DinersPrefixList, 
+-define(DinersPrefixList,
         [
          [3, 0, 0],
          [3, 0, 1],
@@ -121,14 +121,14 @@
         ]
        ).
 
--define(Jcb15PrefixList, 
+-define(Jcb15PrefixList,
         [
          [2, 1, 0, 0],
          [1, 8, 0, 0]
         ]
         ).
 
--define(VoyagerPrefixList, 
+-define(VoyagerPrefixList,
         [
          [8,6,9,9]
         ]

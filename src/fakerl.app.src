@@ -3,6 +3,7 @@
   {description, "Application for generating fake data"},
   {vsn, "1"},
   {registered, []},
+  {included_applications, [ jsx, qdate, yamerl, kvc, triq ]},
   {applications, [
                   kernel,
                   stdlib

@@ -5,7 +5,11 @@
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  jsx,
+                  qdate,
+                  kvc,
+                  yamerl
                  ]},
   {mod, { fakerl_app, []}},
   {env, []}

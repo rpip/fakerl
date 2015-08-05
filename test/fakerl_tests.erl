@@ -15,7 +15,7 @@
 %%% Prelude
 %%%----------------------------------------------------------------------
 fakerl_test_() ->
-    {spawn, 
+    {spawn,
      {setup,
       fun setup/0,
       fun teardown/1,
@@ -45,7 +45,7 @@ fakerl_test_() ->
 %%% Setup / Cleanup
 %%%-------------------------------------------------------------------
 setup() ->
-    fakerl:locale(?DEFAULT_LOCALE).
+    ok.
 
 teardown(_) ->
     ok.
@@ -67,7 +67,7 @@ random() ->
 safe_var_idx_regex() ->
     ?assertEqual("{(0)}", fakerl:safe_var_idx_regex("0")),
     ?assertEqual("{(0)}", fakerl:safe_var_idx_regex(0)).
-    
+
 parse_empty_string() ->
     ?assertEqual({error, empty_string}, fakerl:parse("", address)).
 

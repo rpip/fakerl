@@ -5,27 +5,27 @@
 %%% Internet related data generator: usernames, email addresses etc
 %%% @end
 %%% todo: ipv4, ipv6, slugs
-%%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mhp>
+%%% Created :  5 Feb 2014 by Mawuli Adzaku <mawuli@mawuli.me>
 %%%-------------------------------------------------------------------
 
 -module(fakerl_internet).
 -author("Mawuli Adzaku <mawuli@mawuli.me>").
 -include("fakerl.hrl").
 
--export([email/0, 
-         safe_email/0, 
+-export([email/0,
+         safe_email/0,
          free_email/0,
-         company_email/0, 
-         free_email_domain/0, 
-         domain_name/0, 
-         user_name/0, 
-         url/0, 
-         uri_path/0, 
+         company_email/0,
+         free_email_domain/0,
+         domain_name/0,
+         user_name/0,
+         url/0,
+         uri_path/0,
          uri_extension/0,
          uri_path/1,
-         uri/0, 
-         tld/0, 
-         uri_page/0, 
+         uri/0,
+         tld/0,
+         uri_page/0,
          slug/0]).
 
 

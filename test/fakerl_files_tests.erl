@@ -1,14 +1,14 @@
 %%%-------------------------------------------------------------------
-%%% @author Mawuli Adzaku <mawuli@mhp>
+%%% @author Mawuli Adzaku <mawuli.ypa@gmail.com>
 %%% @copyright (C) 2014, Mawuli Adzaku
 %%% @doc
 %%%
 %%% @end
-%%% Created :  7 Jul 2014 by Mawuli Adzaku <mawuli@mhp>
+%%% Created :  7 Jul 2014 by Mawuli Adzaku <mawuli.ypa@gmail.com>
 %%%-------------------------------------------------------------------
 -module(fakerl_files_tests).
 -include_lib("eunit/include/eunit.hrl").
--author("Mawuli Adzaku <mawuli@mawuli.me>").
+-author("Mawuli Adzaku <mawuli.ypa@gmail.com>").
 -include("fakerl.hrl").
 
 %%%----------------------------------------------------------------------
@@ -38,9 +38,11 @@ fakerl_files_test_() ->
 %%% Setup / Cleanup
 %%%-------------------------------------------------------------------
 setup() ->
-    application:start(fakerl),
-    Data = fakerl:get_locale_data(en),
-    kvc:path("en.files", Data).
+    application:start(yamerl),
+    application:start(qdate),
+    Data = fakerl:get_locale_data(?DEFAULT_LOCALE),
+    FileTypes = kvc:path("en.files", Data),
+    FileTypes.
 
 teardown(_) ->
     ok.
@@ -94,5 +96,3 @@ mime_type(Data) ->
     AllMimeTyes = [ MimeTypes || {_FileCategory, MimeTypes } <- Data ],
     True = lists:member(MimeType, lists:merge(AllMimeTyes)),
     ?_assert(True).
-
-    

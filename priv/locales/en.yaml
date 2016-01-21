@@ -26,6 +26,9 @@ en:
     address:
       - "{{street_address}} {{postcode}} {{city}}"
 
+  currency:
+    codes: [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BRL, BSD, BTN, BWP, BYR, BZD, CAD, CDF, CHF, CLP, CNY, COP, CRC, CUP, CVE, CZK, DJF, DKK, DOP, DZD, ECS, EEK, EGP, ETB, EUR, FJD, FKP, GBP, GEL, GGP, GHS, GIP, GMD, GNF, GTQ, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, IMP, INR, IQD, IRR, ISK, JEP, JMD, JOD, JPY, KES, KGS, KHR, KMF, KPW, KRW, KWD, KYD, KZT, LAK, LBP, LKR, LRD, LSL, LTL, LVL, LYD, MAD, MDL, MKD, MGA, MMK, MNK, MNT, MRO, MUR, MVR, MWK, MXN, MYR, MZN, NAD, NGN, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SEK, SGD, SHP, SLL, SOS, SRD, STD, SVC, SYP, SZL, THB, TJS, TMM, TND, TOP, TRY, TTD, TVD, TWD, TZS, UAH, UGX, USD, UYU, UZS, VEF, VND, XAF, XCD, XOF, XPF, YER, ZAR, ZMK, ZWD]
+
   company:
     suffix: [Inc, and Sons, LLC, Group, Ltd, Group, Holdings, Partners, Services]
     # Buzzword wordlist from http://www.1728.com/buzzword.htm
@@ -776,7 +779,7 @@ en:
       - application/xop+xml # XOP
       - application/zip  # ZIP archive files; Registered[8]
       - application/gzip # Gzip, Defined in RFC 6713
-    audio_mime_types: 
+    audio_mime_types:
       - audio/basic # mulaw audio at 8 kHz, 1 channel; Defined in RFC 2046
       - audio/L24 # 24bit Linear PCM audio at 8-48 kHz, 1-N channels; Defined in RFC 3190
       - audio/mp4   # MP4 audio

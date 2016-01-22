@@ -13,6 +13,8 @@
          cities/0,
          city/0,
          city_suffix/0,
+         state/0,
+         state_abbr/0,
          street_suffix/0,
          street_name/0,
          street_address/0,
@@ -48,6 +50,12 @@ building_number() ->
 city() ->
     Format = fakerl:fetch("address.city"),
     fakerl:parse(Format, ?MODULE).
+
+state() ->
+    fakerl:fetch("address.state").
+
+state_abbr() ->
+    fakerl:fetch("address.state_abbr").
 
 street_name() ->
     fakerl:parse("{{ address.street_name }}", ?MODULE).

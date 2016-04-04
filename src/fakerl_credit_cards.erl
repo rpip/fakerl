@@ -39,7 +39,7 @@ credit_card_types() ->
       
 
 random_card_type() ->
-    fakerl:random_element(proplist:get_keys(credit_card_types())).
+    fakerl:random_element(proplists:get_keys(credit_card_types())).
 
 credit_card_provider() ->
     CardType = random_card_type(),
@@ -49,7 +49,7 @@ credit_card_type() ->
     credit_card_type(random_card_type()).
 
 credit_card_type(CardType) ->
-    proplist:get_value(CardType, credit_card_types()).
+    proplists:get_value(CardType, credit_card_types()).
 
 credit_card_provider(CardType) when is_atom(CardType) ->
     Card = credit_card_type(CardType),

@@ -12,7 +12,7 @@ fill-in your persistence to stress test it, or anonymize data taken from a produ
 
 Fakerl is inspired by Python's [Faker][python-faker] and Ruby's [Faker][ruby-faker].
 
-[![Build Status](https://travis-ci.org/mawuli/fakerl.svg?branch=master)](https://travis-ci.org/mawuli/fakerl)
+[![Build Status](https://travis-ci.org/rpip/fakerl.svg?branch=master)](https://travis-ci.org/rpip/fakerl)
 
 *work in progress*
 

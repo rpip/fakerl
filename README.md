@@ -95,12 +95,12 @@ The following fake data providers are available:
 
 ## Build
 
-Fakerl requires make and rebar to build.
+Fakerl requires make and rebar3 to build.
 
 To build, go to the Fakerl directory and simply type:
 
 ```bash
-make && make tests
+make rebar3 && make tests
 ```
 
 To run fakerl in an Erlang shell, simple type:

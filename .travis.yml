@@ -4,6 +4,7 @@ otp_release:
   - 17.0
   - R16B
   - R15B03
+install: true
 script: make rebar3 && make tests
 branches:
   only:

@@ -11,7 +11,15 @@
 .PHONY: all clean tests disclean tests rel travis update xref \
 	shell install dialyzer rebar3
 
-REBAR3_URL=https://s3.amazonaws.com/rebar3/rebar3
+ifeq ($(ERL),)
+	$(error "Erlang not available on this system")
+endif
+
+# If building on travis, use the rebar in the current directory
+ifeq ($(TRAVIS),true)
+	REBAR = $(CURDIR)/rebar
+endif
+
 ifeq ($(wildcard rebar3),rebar3)
   REBAR3 = $(CURDIR)/rebar3
 endif
@@ -21,8 +29,10 @@ REBAR3 ?= $(shell which rebar3)
 
 # And finally, prep to download rebar if all else fails
 ifeq ($(REBAR3),)
-REBAR3 = rebar3
+	REBAR3 = rebar3
 endif
+
+REBAR3_URL=https://s3.amazonaws.com/rebar3/rebar3
 
 all: $(REBAR3)
 	@$(REBAR3) do clean, compile, eunit

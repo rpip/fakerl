@@ -1,6 +1,6 @@
 {application, fakerl,
  [
-  {description, "Application for generating fake data"},
+  {description, "Library for generating fake data"},
   {vsn, "1"},
   {registered, []},
   {applications, [
@@ -11,6 +11,26 @@
                   kvc,
                   yamerl
                  ]},
+  {modules, [
+             fakerl,
+             fakerl_address,
+             fakerl_company,
+             fakerl_credit_cards,
+             fakerl_currency,
+             fakerl_datetime,
+             fakerl_files,
+             fakerl_internet,
+             fakerl_jobs,
+             fakerl_lorem,
+             fakerl_names,
+             fakerl_phone_number,
+             fakerl_profile,
+             fakerl_user_agent
+            ]},
   {mod, { fakerl_app, []}},
-  {env, []}
+  {env, []},
+  {maintainers, ["Yao Adzaku"]},
+  {licenses, ["MIT"]},
+  {links, [{"Github", "https://github.com/rpip/fakerl"}]},
+  {build_tools, ["rebar3"]}
  ]}.

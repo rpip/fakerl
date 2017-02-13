@@ -1,79 +1,55 @@
-APPNAME = fakerl
-DIALYZER = dialyzer
-ERL = $(shell which erl)
-ERLFLAGS= -pa $(CURDIR)/.eunit -pa $(CURDIR)/ebin -pa $(CURDIR)/deps/*/ebin -s $(APPNAME)
-REBAR = ./rebar $(REBAR_ARGS)
-REBAR_URL := https://github.com/rebar/rebar/wiki/rebar
+#
+# credit https://github.com/chef/mini_s3
+#
 
-.PHONY: all compile docs clean tests build-plt dialyze shell distclean pdf \
-update-deps rebuild
-
-
-# ================================================================
-# Verify that porgrames needed by this Makefile are available
-# ================================================================
-ifeq ($(ERL),)
-$(error "Erlang not running on this system")
+#
+# Use rebar3 from either:
+# - ./rebar3
+# - rebar3 on the PATH (found via which)
+# - Downloaded from $REBAR3_URL
+#
+REBAR3_URL=https://s3.amazonaws.com/rebar3/rebar3
+ifeq ($(wildcard rebar3),rebar3)
+  REBAR3 = $(CURDIR)/rebar3
 endif
 
-# ==============================================================
-# Make build rules
-# ==============================================================
-all: app
+# Fallback to rebar on PATH
+REBAR3 ?= $(shell which rebar3)
 
-app: rebar deps
-	@$(REBAR) compile
+# And finally, prep to download rebar if all else fails
+ifeq ($(REBAR3),)
+REBAR3 = rebar3
+endif
 
-deps:
-	@$(REBAR) get-deps
-	$(REBAR) compile
+all: $(REBAR3)
+	@$(REBAR3) do clean, compile, eunit
 
-update-deps:
-	$(REBAR) update-deps
-	$(RENDER) compile
+rel: all
+	@$(REBAR3) release
 
-compile:
-	$(REBAR) skip_deps=true compile
+test:
+	@$(REBAR3) eunit ct
 
-clean:
-	- rm -rf $(CURDIR)/test/*.beam
-	- rm -rf $(CURDIR)/ebin
-	- rm -rf $(CURDIR)/*.dump
-	$(REBAR) skip_deps=true clean
+shell:
+	@$(REBAR3) as shell shell
 
-distclean: clean
-	- rm -rvf $(CURDIR)/deps
-	- rm -rf $(CURDIR)/doc/*
+dialyzer:
+	@$(REBAR3) dialyzer
 
-tests: REBAR_ARGS = -C rebar.test.config
-tests: clean app eunit ct
+xref:
+	@$(REBAR3) xref
 
-eunit: compile clean
-	@$(REBAR) eunit skip_deps=true
+update:
+	@$(REBAR3) update
 
-ct:
-	@$(REBAR) ct skip_deps=true
+install: $(REBAR3) distclean update
 
-build-plt:
-	@$(DIALYZER) --build_plt --output_plt .$(APPNAME)_dialyzer.plt \
-		--apps kernel stdlib sasl inets crypto public_key ssl
+distclean:
+	@rm -rf _build
 
-dialyze:
-	@$(DIALYZER) --src src --plt .$(APPNAME)_dialyzer.plt --no_native \
-		-Werror_handling -Wrace_conditions -Wunmatched_returns # -Wunderspecs
+$(REBAR3):
+	curl -Lo rebar3 $(REBAR3_URL) || wget $(REBAR3_URL)
+	chmod a+x rebar3
 
-docs:
-	@$(REBAR) doc skip_deps=true
-
-pdf:
-	pandoc README.md -o README.pdf
-
-shell: deps compile
-	- @$(REBAR) skip-deps=true eunit
-	@$(ERL) $(ERLFLAGS)
-
-rebar:
-	$(ERL) -noshell -s inets -s ssl \
-	-eval '{ok, saved_to_file} = httpc:request(get, {"$(REBAR_URL)", []}, [], [{stream, "./rebar"}])' \
-	-s init stop
-	chmod +x ./rebar
+travis: all
+	@echo "Travis'd!"

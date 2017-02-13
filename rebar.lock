@@ -1,0 +1,30 @@
+{"1.1.0",
+[{<<"cf">>,{pkg,<<"cf">>,<<"0.2.2">>},2},
+ {<<"erlware_commons">>,{pkg,<<"erlware_commons">>,<<"1.0.0">>},1},
+ {<<"jsx">>,
+  {git,"https://github.com/talentdeficit/jsx",
+       {ref,"d4b6d3dc5fd9e759ff7a0c476654ea5124f5bae9"}},
+  0},
+ {<<"kvc">>,
+  {git,"https://github.com/etrepum/kvc",
+       {ref,"5f482a8db330c4dcb2d456b6135c740b8ff7eebb"}},
+  0},
+ {<<"qdate">>,
+  {git,"https://github.com/choptastic/qdate.git",
+       {ref,"3e2688cbec2ea5815d2a31a6e1b1f6d955f4a4df"}},
+  0},
+ {<<"qdate_localtime">>,{pkg,<<"qdate_localtime">>,<<"1.1.0">>},1},
+ {<<"triq">>,
+  {git,"https://github.com/krestenkrab/triq",
+       {ref,"c7306b8eaea133d52140cb828817efb5e50a3d52"}},
+  0},
+ {<<"yamerl">>,
+  {git,"https://github.com/yakaz/yamerl",
+       {ref,"57c050ec7a3823ce699cbbab4929ce377d28074c"}},
+  0}]}.
+[
+{pkg_hash,[
+ {<<"cf">>, <<"7F2913FFF90ABCABD0F489896CFEB0B0674F6C8DF6C10B17A83175448029896C">>},
+ {<<"erlware_commons">>, <<"087467DE5833C0BB5B3CCDD387F9E9C1FB816A75B7A709629BF24B5ED3246C51">>},
+ {<<"qdate_localtime">>, <<"5F6C3ACF10ECC5A7E2EFA3DCD2C863102B962188DBD9E086EC01D29FE029DA29">>}]}
+].

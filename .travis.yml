@@ -3,13 +3,13 @@ otp_release:
   - 17.0
   - R16B
   - R15B03
-script: make && make tests
+script: make
 branches:
   only:
     - master
 notifications:
   email:
     recipients:
-      - mawuli.ypa@gmail.com
+      - yao.adzaku@gmail.com
     on_success: change #[always|never|change] # default: change
     on_failure: always #[always|never|change] # default: always

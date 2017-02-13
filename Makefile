@@ -8,6 +8,9 @@
 # - rebar3 on the PATH (found via which)
 # - Downloaded from $REBAR3_URL
 #
+.PHONY: all clean tests disclean tests rel travis update xref \
+	shell install dialyzer rebar3
+
 REBAR3_URL=https://s3.amazonaws.com/rebar3/rebar3
 ifeq ($(wildcard rebar3),rebar3)
   REBAR3 = $(CURDIR)/rebar3
@@ -27,7 +30,7 @@ all: $(REBAR3)
 rel: all
 	@$(REBAR3) release
 
-test:
+tests:
 	@$(REBAR3) eunit ct
 
 shell:
@@ -44,12 +47,15 @@ update:
 
 install: $(REBAR3) distclean update
 
-distclean:
+distclean: clean
 	@rm -rf _build
+
+clean:
+	@$(REBAR3) clean skip_deps=true
 
 $(REBAR3):
 	curl -Lo rebar3 $(REBAR3_URL) || wget $(REBAR3_URL)
-	chmod a+x rebar3
+	chmod +x ./rebar3
 
 travis: all
 	@echo "Travis'd!"

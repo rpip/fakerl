@@ -1,6 +1,6 @@
 {application,fakerl,
              [{description,"Library for generating fake data"},
-              {vsn,"1.2.0"},
+              {vsn,"1.3.0"},
               {registered,[]},
               {applications,[kernel,stdlib,jsx,qdate,kvc,yamerl]},
               {modules,[fakerl,fakerl_address,fakerl_company,

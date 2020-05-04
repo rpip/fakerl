@@ -1,4 +1,4 @@
-     _______    ___       __  ___  _______ .______       __
+_______    ___       __  ___  _______ .______       __
     |   ____|  /   \     |  |/  / |   ____||   _  \     |  |
     |  |__    /  ^  \    |  '  /  |  |__   |  |_)  |    |  |
     |   __|  /  /_\  \   |    <   |   __|  |      /     |  |
@@ -13,6 +13,7 @@ fill-in your persistence to stress test it, or anonymize data taken from a produ
 Fakerl is inspired by Python's [Faker][python-faker] and Ruby's [Faker][ruby-faker].
 
 [![Build Status](https://travis-ci.org/rpip/fakerl.svg?branch=master)](https://travis-ci.org/rpip/fakerl)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frpip%2Ffakerl.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frpip%2Ffakerl?ref=badge_shield)
 
 *work in progress*
 
@@ -145,3 +146,6 @@ Credits
 [ruby-faker]: https://github.com/stympy/faker "Ruby faker"
 [joke2k]: https://github.com/joke2k "joke2k"
 [stympy]: https://github.com/stympy "Benjamin Curtis"
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frpip%2Ffakerl.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frpip%2Ffakerl?ref=badge_large)
